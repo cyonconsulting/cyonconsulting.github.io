@@ -1,10 +1,4 @@
-# Name of your site (displayed in the header)
-# name: Alexander Cyon Consulting AB
 title: Alexander Cyon Consulting AB
-
-# Short bio or description (displayed in the header)
-description: >- # this means to ignore newlines until next yml key
-  Alexander Cyon Consulting AB helps you build amazing mobile applications, especially for iOS.
 
 # URL of your avatar or profile pic (you could use your GitHub profile pic)
 avatar: https://avatars.githubusercontent.com/u/864410
@@ -14,21 +8,9 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "cyonconsulting.com" # the base hostname & protocol for your site, e.g. http://example.com
 email: alex@cyonconsulting.com
 github_username: sajjon
-stackoverflow_username: users/1311272/sajjon
-linkedin: alexcyon
+linkedin_username: alexcyon
 twitter_username: AlexCyon
 
-# Build settings
 markdown: kramdown
 theme: minima
-# plugins:
-#   - jekyll-feed
-
-# Exclude from processing.
 exclude: [vendor]
-# exclude:
-#   - Gemfile
-#   - Gemfile.lock
-#   - LICENSE
-#   - README.md
-#   - CNAME

@@ -5,7 +5,7 @@ avatar: https://avatars.githubusercontent.com/u/864410
 
 baseurl: "" # the subpath of your site, e.g. /blog
 
-url: "cyonconsulting.com" # the base hostname & protocol for your site, e.g. http://example.com
+url: "cyonconsulting.github.io"
 email: alex@cyonconsulting.com
 github_username: sajjon
 linkedin_username: alexcyon

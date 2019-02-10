@@ -1,9 +1,9 @@
 ---
-layout: home
+layout: page
 ---
 Welcome to Alexander Cyon Consulting AB - I'm Alex, the sole owner of this company.
 
-![Photo](Photo.jpg)
+<img src="Photo.jpg" align="right" hspace="20" height="300" />
 
 I'm Swift developer with 9 years experience in mobile development. M.S.cs from [KTH Royal Institute of Technology](https://www.kth.se/en). I'm social, entrepreneurial and curious. I love spreading knowledge and learning new things. I also like to automate everything that can be automated.
 

@@ -1,7 +1,16 @@
 // The proposal is fixed in SEK at the 13 November 2026 ECB reference fixing.
 export const FX = Object.freeze({ date: '2026-11-13', EUR: 1, USD: 1.1052, SEK: 11.1075 });
 export const BASE_DAYS = 221; // 261 weekdays - 5 weekday public holidays - 35 leave days, 2027.
-export const ASK_SEK = Math.round(325000 / FX.USD * FX.SEK / 1000) * 1000;
+export const SALARY_RANGES = Object.freeze([
+  { id: 'snap', label: 'Snap', max: 414000 },
+  { id: 'reddit', label: 'Reddit', max: 325500 },
+  { id: 'metamask', label: 'MetaMask', max: 272000 },
+  { id: 'procore', label: 'Procore', max: 272580 },
+  { id: 'toast', label: 'Toast', max: 301000 },
+]);
+export const MEAN_UPPER_USD = SALARY_RANGES.reduce((sum, range) => sum + range.max, 0) / SALARY_RANGES.length;
+export const BENCHMARK_USD = Math.round(MEAN_UPPER_USD / 1000) * 1000;
+export const ASK_SEK = Math.round(BENCHMARK_USD / FX.USD * FX.SEK / 1000) * 1000;
 export const HOURS_PER_DAY = 8;
 export const HOLIDAYS = [
   ['2027-01-01', "New Year’s Day"], ['2027-01-06', 'Epiphany'],

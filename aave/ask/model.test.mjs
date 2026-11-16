@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
+import { SALARY_RANGES, MEAN_UPPER_USD, BENCHMARK_USD, ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-7, `${a} != ${b}`);
 test('2027 calendar independently gives 261 weekdays and five weekday public holidays', () => {
  let count = 0;
@@ -10,9 +10,9 @@ test('2027 calendar independently gives 261 weekdays and five weekday public hol
  assert.equal(count, 261);
  assert.deepEqual(HOLIDAYS.filter(([date]) => isWeekday(date)).map(([date]) => date), ['2027-01-01','2027-01-06','2027-03-26','2027-03-29','2027-05-06']);
 });
-test('rounded SEK anchor approximates $325k annual invoices after 35 days leave and five holidays', () => {
+test('rounded SEK anchor approximates $317k annual invoices after 35 days leave and five holidays', () => {
  const r = calculate(); assert.equal(r.worked, 221); assert.equal(r.billed, 221);
- assert.ok(Math.abs(convert(r.annual, 'USD') - 325000) < 50);
+ assert.ok(Math.abs(convert(r.annual, 'USD') - BENCHMARK_USD) < 50);
  assert.ok(Number.isInteger(ASK_SEK)); close(r.annual, ASK_SEK);
  close(r.noAbsence - r.annual, 40 * r.daily);
 });
@@ -32,11 +32,18 @@ test('holiday eves deduct exactly three additional weekdays once', () => {
 });
 test('FX conversions preserve the whole-SEK anchor and hourly rate uses eight hours', () => {
  close(convert(ASK_SEK,'SEK'),ASK_SEK);
- assert.ok(Math.abs(convert(ASK_SEK,'EUR')*1.1052 - 325000) < 50);
+ assert.ok(Math.abs(convert(ASK_SEK,'EUR')*1.1052 - BENCHMARK_USD) < 50);
  assert.equal(HOURS_PER_DAY,8);
  const r = calculate(); close(r.hourly*8,r.daily);
 });
 test('a SEK 1000 ask increment adjusts annual cost by exactly SEK 1000', () => {
  const a = calculate(), b = calculate({ask:ASK_SEK+1000});
  close(b.annual-a.annual,1000);
+});
+
+test('benchmark is the mean of all five upper salary bands, then rounded', () => {
+ assert.equal(SALARY_RANGES.length,5);
+ assert.equal(MEAN_UPPER_USD,317016);
+ assert.equal(BENCHMARK_USD,317000);
+ close(BENCHMARK_USD / (221*8) * 8 * 221,317000);
 });

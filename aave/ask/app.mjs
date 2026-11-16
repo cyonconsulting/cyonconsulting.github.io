@@ -1,4 +1,4 @@
-import { HOURS_PER_DAY, ASK_SEK, calculate, convert } from './model.mjs';
+import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, BENCHMARK_USD, ASK_SEK, calculate, convert } from './model.mjs';
 const $ = id => document.getElementById(id);
 const selected = name => document.querySelector(`input[name="${name}"]:checked`).value;
 function money(sek, currency) {
@@ -59,7 +59,14 @@ $('reset').addEventListener('click', () => {
   $('eves').checked = false;
   render();
 });
-$('anchor-sek').textContent = `${money(ASK_SEK, 'SEK')} PA`;
+$('ask').value = ASK_SEK;
+const usd = amount => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
+const benchmark = usd(BENCHMARK_USD);
+const hoursPerYear = BASE_DAYS * HOURS_PER_DAY;
+const terms = SALARY_RANGES.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} upper salary band"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(Math.round(range.max / 1000) * 1000)}</a>`);
+$('benchmark-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${SALARY_RANGES.length} ≈ <span class="annual-variable">${benchmark} PA</span>`;
+$('hour-equation').textContent = `⇒ ${benchmark} / ${hoursPerYear.toLocaleString('en-US')} hours ≈ ${usd(BENCHMARK_USD / hoursPerYear)}/hour`;
+$('base-equation').textContent = `⇒ (${benchmark} / ${hoursPerYear.toLocaleString('en-US')}) * ${HOURS_PER_DAY} * ${BASE_DAYS} = ${benchmark} PA`;
 const groups = [
   ['Wallets & shared infrastructure', [
     ['radixdlt/sargon', 'Sargon · production Rust SDK'], ['radixdlt/babylon-wallet-ios', 'Radix Wallet · iOS'],

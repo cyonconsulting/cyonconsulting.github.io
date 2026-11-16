@@ -18,28 +18,34 @@ Five distinct Principal iOS/Mobile roles are included. Figures below are exact a
 - RecWorks' Principal Mobile listing quotes GBP 220,000–300,000 including bonus: excluded from the base-only calculation.
 - Estimated aggregator salaries, Staff/Senior Staff roles and product-management roles were excluded from this Principal-only set.
 
-## PTO audit — 16 November 2026
+## Company-specific US PTO audit — 16 November 2026
 
-| Source | Annual PTO and public-holiday information | Model treatment |
+The original salary ads do not quantify both allowances. Broadened the search to other ads, company careers/benefits pages, preserved company profiles and historical policies. Do not transfer an Ireland/UK entitlement or an hourly/non-exempt vacation bank into a US Principal software-engineering comparison.
+
+| Company | Evidence and applicability | Numeric inputs |
 | --- | --- | --- |
-| Snap advert | No fixed ordinary annual-leave or holiday count. Parental leave is mentioned; do not treat it as recurring vacation. Company-level job-board metadata mentions unlimited PTO but does not quantify days or establish this role's actual use. | Unknown counts. |
-| Reddit preserved advert | Flexible vacation, no numerical annual allowance or paid holiday count. | Unknown counts. |
-| MetaMask preserved advert | No numerical annual-leave or paid-holiday allowance in this advert. | Unknown counts. |
-| Google dated salary record | No PTO or holiday allowance in the surviving record. Original employer advert unavailable; do not infer a role-specific entitlement. | Unknown counts. |
-| ServiceTitan employer advert | Flexible time off; no fixed annual allowance or paid holiday count. | Unknown counts. |
+| Snap | [US company benefits profile on Built In](https://www.builtinnyc.com/company/snap-inc/benefits) separates flexible vacation for exempt staff from up to three weeks for non-exempt staff and lists 12 paid holidays. Use the company profile, not Built In's editorial FAQ. This is company-level evidence, not the historical Principal ad's contract. The current [employer benefits landing page](https://careers.snap.com/benefits) no longer exposes numeric US allowances. | Vacation unknown/flexible; holidays 12. Exclude non-exempt vacation bank and 15 sick days. |
+| Reddit | [Employer careers page](https://redditinc.com/careers) says flexible vacation and Reddit global days off, without counts. The [historical Ireland microsite](https://ireland.redditinc.com/) says 25 days and has a 2021 footer/pre-IPO text: excluded from US inputs. | Both unknown; estimate from available-company means. |
+| Consensys / MetaMask | [Company benefits profile on Wellfound](https://wellfound.com/company/consensys/culture_and_benefits) says unlimited vacation/holidays and quarterly zero-productivity days, but no annual numeric vacation or holiday allowance. Quarterly frequency does not establish how many days, or whether they overlap holidays/vacation. Current employer careers site has changed following corporate changes; do not treat unrelated later policies as the preserved MetaMask role's contract. | Both unknown; estimate from available-company means. Do not invent four recharge days. |
+| Google | [Live employer Staff Software Engineer, Infrastructure, Google Cloud Runtimes ad](https://www.google.com/about/careers/applications/jobs/results/113654329000239814-staff-software-engineer-infrastructure-google-cloud-runtimes), benefit disclosure for all eligible US employees: 20 vacation days/year for first five years, plus 13 paid holidays/year. Full ad text verified, not merely a search result. Salary in that other ad is not used. This supplies a current US policy proxy for the preserved Principal salary record, not proof of its exact historical terms. [2022 employer-confirmed announcement reported by HR Dive](https://www.hrdive.com/news/google-expands-pto-sets-minimum-20-days-vacation/618108/) corroborates the 20-day minimum historically. | Vacation 20; holidays 13. Exclude sick, parental and caregiver leave. |
+| ServiceTitan | Principal ad and [other employer analyst advert JR116409](https://servicetitan.wd1.myworkdayjobs.com/servicetitan/job/us-remote/senior-analyst--business-operations---strategy_jr116409) say flexible time off without annual counts. Employee anecdotes vary, so no numerical entitlement inferred from them. | Both unknown; estimate from available-company means. |
 
 ## Calculation and limits
 
-Each source is normalized separately: `upperSalary / (8 * referenceDays)`. Reference days are 261 weekdays (2027) minus quantified, non-overlapping paid annual leave and paid holidays. When either count is missing, use the arithmetic mean of the counts explicitly stated for that allowance in the ad set. Imputed values do not contribute to that mean. Only if no ad states the allowance does the explicit fallback apply.
+Resolve each vacation/holiday count: salary advert → applicable company evidence → mean of known company counts → last-resort fallback. Compute each upper salary's hourly rate separately, then sum hourly rates and divide by five. Imputed counts never contribute to the evidence mean. Means are separate for vacation and holidays, including explicit zeros but excluding unknowns.
 
-Default fallbacks: 20 paid annual-leave days and zero additional paid public holidays. This gives 241 reference days for all five current sources. Zero additional holidays is a conservative calculation assumption, not a claim that employers offer none. The user asked to replace the overly conservative 261-day fallback with 241. Both fallback counts are adjustable on the page. Employer-specific stated counts take precedence, including an explicit zero.
+Available vacation mean: 20 days from Google alone. Available holiday mean: (12 Snap + 13 Google) / 2 = 12.5 days. This is a sparse comparison proxy, not a representative estimate of actual time taken at flexible/unlimited-PTO employers. Company holiday counts are treated as paid workday allowances; no 2027 employer holiday calendars were verified. Do not add Swedish holidays to these employee reference years.
 
-The exact mean upper annual band remains USD 366,820, but it is not the B2B target. The mean normalized hourly comparison is about USD 190.26 at 241 reference days. Applied to 221 eight-hour billed days, it produces about USD 336,379, displayed as USD 336,000 PA. The rounded SEK anchor is 3,377,000 at the dated 13 November FX snapshot.
+| Company | Vacation input | Holiday input | Reference days | Upper salary / (8 × reference days) |
+| --- | --- | --- | --- | --- |
+| Snap | 20 estimated | 12 company profile | 229 | USD 225.98/hour |
+| Reddit | 20 estimated | 12.5 estimated | 228.5 | USD 178.06/hour |
+| MetaMask | 20 estimated | 12.5 estimated | 228.5 | USD 148.80/hour |
+| Google | 20 US policy | 13 US policy | 228 | USD 234.10/hour |
+| ServiceTitan | 20 estimated | 12.5 estimated | 228.5 | USD 216.41/hour |
 
-Sensitivity: 20 paid annual-leave days plus 10 additional holidays gives 231 reference days and about USD 351,000 PA. No assumed paid days off gives 261 days and about USD 311,000 PA. No source currently quantifies a count, so these are assumptions, not measured employee work schedules.
+Exact mean hourly: USD 200.67094894723934. At 221 eight-hour billed days this gives USD 354,786.24; rounded target USD 355,000 PA. SEK anchor 3,568,000 at the dated 13 November FX snapshot. The actual SEK agreement therefore has a small rounding difference from the formula. Previous all-unknown fallback result was USD 336,000; it is superseded by this evidence-enriched methodology.
 
-These are selected upper-market advertised bands across different employers, scopes, dates and US locations, not a representative salary survey, a guaranteed offer, or Aave's budget. The Google record has weaker provenance than the employer-hosted ServiceTitan advert; it is labelled accordingly on the page. Link availability can change after this check.
+Last-resort fallback settings remain 20 vacation days and zero additional holidays, but are inactive while evidence exists for both components. The model tests retain no-evidence cases to verify fallback behavior.
 
-## Per-ad hourly-first methodology
-
-Resolve each paid-leave/holiday allowance using: its stated count, otherwise the mean of the stated counts in the ad set, otherwise the visible fallback. Calculate each advert's hourly rate from its upper salary and its own resolved reference days. Sum those hourly rates and divide by the number of adverts. Apply the resulting mean hourly rate to Alexander's 221 eight-hour billed days. The table displays every per-ad hourly rate. Means can be fractional days; explicit zero counts are included, unknown values are not. None of the current five sources quantifies these allowances, so the 20-day leave/zero-additional-holiday fallback and approximately USD 336,000 target remain. Thirteen model checks pass, including mixed reported PTO, imputation, fractional means and an example where averaging salaries first gives the wrong result.
+These selected upper-market advertised bands span different employers, scopes, dates and US locations. They are not a salary survey, a guaranteed offer or Aave's budget. Company policy proxies are not exact terms of the historical Principal ads. Flexible/unlimited PTO is not a measurable annual allowance. Links and policies can change after this audit.

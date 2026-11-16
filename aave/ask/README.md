@@ -17,7 +17,7 @@ Open http://127.0.0.1:8765/aave/ask/.
 ## Compensation model
 
 - Normalize each upper annual employee salary separately to an hourly rate, then average: `mean(upperSalary / (8 * referenceDays))`.
-- Reference days: 261 weekdays (2027) minus stated paid annual leave and paid holidays. Missing counts use explicit, adjustable assumptions: 20 paid leave days and zero additional paid holidays by default, giving 241 reference days. This does not assert that employees receive no holidays.
+- Reference days: 261 weekdays (2027) minus stated paid annual leave and paid holidays. Missing counts first use the mean of the counts explicitly stated in the other adverts, separately for annual leave and paid holidays. If no advert states that allowance, use explicit, adjustable fallbacks: 20 paid leave days and zero additional paid holidays by default, giving 241 reference days. This does not assert that employees receive no holidays.
 - Each current source was checked for a quantified allowance; none supplies one. See [SALARY-SOURCES.md](SALARY-SOURCES.md). Flexible or unlimited leave is not a numerical allowance. Stated counts override fallback counts if later verified.
 - Apply the resulting hourly rate to Alexander's 221 billed days × 8 hours. That schedule excludes 35 additional leave days and five weekday Swedish red days, with no double deductions.
 - The default comparison is about USD 190/hour and USD 336,000 annual invoices, using rounded SEK 3,377,000 as the preferred currency anchor. The salary-band mean USD 366,820 is context, not the annual B2B target.
@@ -42,3 +42,7 @@ Commit and push are authorized. Deployment remains pending explicit approval. Gi
 ## PTO-normalized revision
 
 The summary and table expose both the per-ad source findings and fallback assumptions. Unknown leave defaults to 20 days and unknown additional holidays to zero, after the user rejected 261 reference days as an overly conservative fallback. Twelve model checks cover mixed employer-specific counts, fallback overrides, annual normalization, calendar deductions, FX and the calculator. Desktop review includes changing fallback holidays and resetting the proposal. Commit and push are authorized; deployment remains unauthorized.
+
+## Per-ad hourly-first methodology
+
+Resolve each paid-leave/holiday allowance using: its stated count, otherwise the mean of the stated counts in the ad set, otherwise the visible fallback. Calculate each advert's hourly rate from its upper salary and its own resolved reference days. Sum those hourly rates and divide by the number of adverts. Apply the resulting mean hourly rate to Alexander's 221 eight-hour billed days. The table displays every per-ad hourly rate. Means can be fractional days; explicit zero counts are included, unknown values are not. None of the current five sources quantifies these allowances, so the 20-day leave/zero-additional-holiday fallback and approximately USD 336,000 target remain. Thirteen model checks pass, including mixed reported PTO, imputation, fractional means and an example where averaging salaries first gives the wrong result.

@@ -30,7 +30,7 @@ Five distinct Principal iOS/Mobile roles are included. Figures below are exact a
 
 ## Calculation and limits
 
-Each source is normalized separately: `upperSalary / (8 * referenceDays)`. Reference days are 261 weekdays (2027) minus quantified, non-overlapping paid annual leave and paid holidays. When either count is missing, use that count's explicit fallback assumption.
+Each source is normalized separately: `upperSalary / (8 * referenceDays)`. Reference days are 261 weekdays (2027) minus quantified, non-overlapping paid annual leave and paid holidays. When either count is missing, use the arithmetic mean of the counts explicitly stated for that allowance in the ad set. Imputed values do not contribute to that mean. Only if no ad states the allowance does the explicit fallback apply.
 
 Default fallbacks: 20 paid annual-leave days and zero additional paid public holidays. This gives 241 reference days for all five current sources. Zero additional holidays is a conservative calculation assumption, not a claim that employers offer none. The user asked to replace the overly conservative 261-day fallback with 241. Both fallback counts are adjustable on the page. Employer-specific stated counts take precedence, including an explicit zero.
 
@@ -39,3 +39,7 @@ The exact mean upper annual band remains USD 366,820, but it is not the B2B targ
 Sensitivity: 20 paid annual-leave days plus 10 additional holidays gives 231 reference days and about USD 351,000 PA. No assumed paid days off gives 261 days and about USD 311,000 PA. No source currently quantifies a count, so these are assumptions, not measured employee work schedules.
 
 These are selected upper-market advertised bands across different employers, scopes, dates and US locations, not a representative salary survey, a guaranteed offer, or Aave's budget. The Google record has weaker provenance than the employer-hosted ServiceTitan advert; it is labelled accordingly on the page. Link availability can change after this check.
+
+## Per-ad hourly-first methodology
+
+Resolve each paid-leave/holiday allowance using: its stated count, otherwise the mean of the stated counts in the ad set, otherwise the visible fallback. Calculate each advert's hourly rate from its upper salary and its own resolved reference days. Sum those hourly rates and divide by the number of adverts. Apply the resulting mean hourly rate to Alexander's 221 eight-hour billed days. The table displays every per-ad hourly rate. Means can be fractional days; explicit zero counts are included, unknown values are not. None of the current five sources quantifies these allowances, so the 20-day leave/zero-additional-holiday fallback and approximately USD 336,000 target remain. Thirteen model checks pass, including mixed reported PTO, imputation, fractional means and an example where averaging salaries first gives the wrong result.

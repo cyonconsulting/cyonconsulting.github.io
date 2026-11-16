@@ -1,4 +1,4 @@
-import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, REFERENCE_WEEKDAYS, DEFAULT_PAID_LEAVE, DEFAULT_PAID_HOLIDAYS, comparisonTarget, referenceDays, ASK_SEK, calculate, convert } from './model.mjs';
+import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, REFERENCE_WEEKDAYS, DEFAULT_PAID_LEAVE, DEFAULT_PAID_HOLIDAYS, comparisonTarget, allowanceDefaults, perAdHourlyRates, ASK_SEK, calculate, convert } from './model.mjs';
 const $ = id => document.getElementById(id);
 const selected = name => document.querySelector(`input[name="${name}"]:checked`).value;
 let activeAskSek = ASK_SEK;
@@ -72,9 +72,11 @@ function renderComparison() {
   }
   const fallback = { paidLeaveDays: Number($('fallback-leave').value), paidHolidayDays: Number($('fallback-holidays').value) };
   const comparison = comparisonTarget(fallback);
+  const defaults = allowanceDefaults(SALARY_RANGES, fallback);
+  const rates = perAdHourlyRates(SALARY_RANGES, fallback);
   activeAskSek = comparison.askSek; $('ask').value = activeAskSek;
   $('salary-rows').replaceChildren();
-  for (const [i, range] of SALARY_RANGES.entries()) {
+  for (const [i, range] of rates.entries()) {
     const row = document.createElement('tr'); row.id = `range-${i}`; row.className = `range-${i}`;
     const heading = document.createElement('th'); heading.scope = 'row';
     const marker = document.createElement('span'); marker.className = 'range-marker'; marker.textContent = String.fromCharCode(65+i);
@@ -86,13 +88,15 @@ function renderComparison() {
     const source = document.createElement('a'); source.href = range.source; source.textContent = `${range.sourceLabel} ↗`;
     context.append(document.createTextNode(`${range.context} `), source);
     const pto = document.createElement('td'); pto.className = 'pto-cell';
-    const assumed = range.paidLeaveDays == null || range.paidHolidayDays == null;
-    pto.textContent = `${range.ptoNote} ${referenceDays(range, fallback)} reference days${assumed ? ' (uses assumptions)' : ''}.`;
-    row.append(heading,pay,pto,context); $('salary-rows').append(row);
+    pto.textContent = `${range.ptoNote} ${range.referenceDays} reference days. Leave: ${range.leaveBasis}; holidays: ${range.holidayBasis}.`;
+    const hourly = document.createElement('td'); hourly.className = 'hourly-cell'; hourly.textContent = `${usd(range.hourly)}/h`;
+    row.append(heading,pay,pto,hourly,context); $('salary-rows').append(row);
   }
-  const terms = SALARY_RANGES.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} hourly comparison"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(Math.round(range.max / 1000) * 1000)} / (8 * ${referenceDays(range, fallback)})</a>`);
-  $('reference-equation').textContent = `⇒ Unstated counts: ${REFERENCE_WEEKDAYS} − ${fallback.paidLeaveDays} assumed leave − ${fallback.paidHolidayDays} assumed holidays = ${REFERENCE_WEEKDAYS-fallback.paidLeaveDays-fallback.paidHolidayDays} days`;
-  $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${SALARY_RANGES.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
+  const terms = rates.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} hourly rate"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(range.hourly)}/h</a>`);
+  const leaveBasis = defaults.paidLeaveDaysCount ? `mean stated leave (${defaults.paidLeaveDaysCount} ads)` : 'fallback leave (no stated counts)';
+  const holidayBasis = defaults.paidHolidayDaysCount ? `mean stated holidays (${defaults.paidHolidayDaysCount} ads)` : 'fallback holidays (no stated counts)';
+  $('reference-equation').textContent = `⇒ Missing counts: ${defaults.paidLeaveDays} days ${leaveBasis}; ${defaults.paidHolidayDays} days ${holidayBasis}`;
+  $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${rates.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
   $('base-equation').textContent = `⇒ ${usd(comparison.hourly)}/hour * ${HOURS_PER_DAY} * ${BASE_DAYS} ≈ ${usd(comparison.annual)} PA`;
   render();
 }

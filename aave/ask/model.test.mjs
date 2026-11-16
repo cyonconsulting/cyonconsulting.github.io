@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SALARY_RANGES, MEAN_UPPER_USD, BENCHMARK_USD, TARGET_USD, HOURLY_USD, REFERENCE_WEEKDAYS, comparisonTarget, referenceDays, normalizedHourlyRate, ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
+import { SALARY_RANGES, MEAN_UPPER_USD, BENCHMARK_USD, TARGET_USD, HOURLY_USD, REFERENCE_WEEKDAYS, comparisonTarget, allowanceDefaults, perAdHourlyRates, referenceDays, normalizedHourlyRate, ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-7, `${a} != ${b}`);
 test('2027 calendar independently gives 261 weekdays and five weekday public holidays', () => {
  let count = 0;
@@ -67,11 +67,14 @@ test('default unknown PTO assumes 20 paid leave days, giving 241 reference days'
  close(HOURLY_USD*8*221,366820*221/241);
  assert.equal(TARGET_USD,336000); assert.ok(TARGET_USD < BENCHMARK_USD);
 });
-test('different known PTO counts are normalized per advert before the mean', () => {
- const refs=[{max:240000,paidLeaveDays:20,paidHolidayDays:10}, {max:300000,paidLeaveDays:null,paidHolidayDays:null}];
- assert.equal(referenceDays(refs[0]),231); assert.equal(referenceDays(refs[1]),241);
- close(normalizedHourlyRate(refs),(240000/(8*231)+300000/(8*241))/2);
- assert.notEqual(normalizedHourlyRate(refs),270000/(8*236));
+test('each upper salary becomes an hourly rate before calculating the unweighted mean', () => {
+ const refs=[{max:240000,paidLeaveDays:20,paidHolidayDays:10}, {max:360000,paidLeaveDays:30,paidHolidayDays:10}, {max:300000,paidLeaveDays:null,paidHolidayDays:null}];
+ const rates=perAdHourlyRates(refs);
+ assert.deepEqual(rates.map(r=>r.referenceDays),[231,221,226]);
+ assert.equal(rates[2].leaveBasis,'ad average'); assert.equal(rates[2].holidayBasis,'ad average');
+ close(rates[2].hourly,300000/(8*226));
+ close(normalizedHourlyRate(refs),(240000/(8*231)+360000/(8*221)+300000/(8*226))/3);
+ assert.notEqual(normalizedHourlyRate(refs),300000/(8*226));
 });
 test('stated counts override fallbacks; unknown counts remain adjustable', () => {
  assert.equal(referenceDays({paidLeaveDays:25,paidHolidayDays:10},{paidLeaveDays:20,paidHolidayDays:0}),226);
@@ -83,4 +86,13 @@ test('stated counts override fallbacks; unknown counts remain adjustable', () =>
  assert.throws(()=>referenceDays({paidLeaveDays:262,paidHolidayDays:0}),RangeError);
  assert.throws(()=>referenceDays({paidLeaveDays:-1,paidHolidayDays:null}),RangeError);
  assert.throws(()=>normalizedHourlyRate([]),RangeError);
+});
+
+test('imputation uses only reported counts, including zero, never other imputations', () => {
+ const refs=[{max:1,paidLeaveDays:0,paidHolidayDays:null}, {max:1,paidLeaveDays:21,paidHolidayDays:null}, {max:1,paidLeaveDays:null,paidHolidayDays:null}];
+ const defaults=allowanceDefaults(refs,{paidLeaveDays:99,paidHolidayDays:10});
+ assert.equal(defaults.paidLeaveDays,10.5); assert.equal(defaults.paidLeaveDaysCount,2);
+ assert.equal(defaults.paidHolidayDays,10); assert.equal(defaults.paidHolidayDaysCount,0);
+ assert.equal(perAdHourlyRates(refs,{paidHolidayDays:10})[2].referenceDays,240.5);
+ assert.equal(perAdHourlyRates(refs,{paidHolidayDays:10})[2].holidayBasis,'fallback');
 });

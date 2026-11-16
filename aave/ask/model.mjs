@@ -33,14 +33,35 @@ export const DEFAULT_PAID_LEAVE = 20;
 export const DEFAULT_PAID_HOLIDAYS = 0;
 export function referenceDays(range, { paidLeaveDays = DEFAULT_PAID_LEAVE, paidHolidayDays = DEFAULT_PAID_HOLIDAYS } = {}) {
   const counts = [range.paidLeaveDays ?? paidLeaveDays, range.paidHolidayDays ?? paidHolidayDays];
-  if (counts.some(n => n != null && (!Number.isInteger(n) || n < 0))) throw new RangeError('Paid days off must be nonnegative integers or null.');
+  if (counts.some(n => !Number.isFinite(n) || n < 0)) throw new RangeError('Paid days off must be finite and nonnegative.');
   const days = REFERENCE_WEEKDAYS - (counts[0] ?? 0) - (counts[1] ?? 0);
   if (days <= 0) throw new RangeError('Reference days must remain positive.');
   return days;
 }
-export function normalizedHourlyRate(ranges, fallback = {}) {
+export function allowanceDefaults(ranges, fallback = {}) {
+  const result = {};
+  for (const [field, defaultValue] of [['paidLeaveDays', DEFAULT_PAID_LEAVE], ['paidHolidayDays', DEFAULT_PAID_HOLIDAYS]]) {
+    const stated = ranges.map(range => range[field]).filter(value => value != null);
+    if (stated.some(value => !Number.isFinite(value) || value < 0)) throw new RangeError('Stated paid days off must be finite and nonnegative.');
+    result[field] = stated.length ? stated.reduce((sum, value) => sum + value, 0) / stated.length : (fallback[field] ?? defaultValue);
+    result[`${field}Count`] = stated.length;
+  }
+  return result;
+}
+export function perAdHourlyRates(ranges, fallback = {}) {
   if (!ranges.length) throw new RangeError('At least one salary reference is required.');
-  return ranges.reduce((sum, range) => sum + range.max / (HOURS_PER_DAY * referenceDays(range, fallback)), 0) / ranges.length;
+  const defaults = allowanceDefaults(ranges, fallback);
+  return ranges.map(range => ({
+    ...range,
+    referenceDays: referenceDays(range, defaults),
+    hourly: range.max / (HOURS_PER_DAY * referenceDays(range, defaults)),
+    leaveBasis: range.paidLeaveDays != null ? 'stated' : defaults.paidLeaveDaysCount ? 'ad average' : 'fallback',
+    holidayBasis: range.paidHolidayDays != null ? 'stated' : defaults.paidHolidayDaysCount ? 'ad average' : 'fallback',
+  }));
+}
+export function normalizedHourlyRate(ranges, fallback = {}) {
+  const rates = perAdHourlyRates(ranges, fallback);
+  return rates.reduce((sum, range) => sum + range.hourly, 0) / rates.length;
 }
 export function comparisonTarget(fallback = {}) {
   const hourly = normalizedHourlyRate(SALARY_RANGES, fallback);

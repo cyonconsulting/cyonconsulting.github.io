@@ -102,6 +102,7 @@ function renderComparison() {
   $('reference-equation').textContent = `⇒ Missing counts: ${defaults.paidLeaveDays} days ${leaveBasis}; ${defaults.paidHolidayDays} days ${holidayBasis}`;
   $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${rates.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
   $('annual-ask').textContent = `${usd(comparison.annual)} PA`;
+  $('headline-annual').textContent = `$${Math.round(comparison.annual / 1000)}k PA`;
   $('base-equation').textContent = `≈ ${usd(comparison.hourly)}/hour * ${HOURS_PER_DAY} * ${BASE_DAYS} (rounded)`;
   render();
 }

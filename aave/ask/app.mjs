@@ -1,5 +1,6 @@
 import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, comparisonTarget, allowanceDefaults, perAdHourlyRates } from './model.mjs';
 const $ = id => document.getElementById(id);
+const days = value => new Intl.NumberFormat('en-US', { maximumFractionDigits: 2 }).format(value);
 const usd = amount => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
 function renderComparison() {
   const comparison = comparisonTarget();
@@ -18,16 +19,16 @@ function renderComparison() {
     const source = document.createElement('a'); source.href = range.source; source.textContent = `${range.sourceLabel} ↗`;
     context.append(document.createTextNode(`${range.context} `), source);
     const pto = document.createElement('td'); pto.className = 'pto-cell';
-    pto.textContent = `${range.ptoNote} ${range.referenceDays} reference days. Leave: ${range.leaveBasis}; holidays: ${range.holidayBasis}.`;
+    pto.textContent = `${range.ptoNote} ${days(range.referenceDays)} reference days. Leave: ${range.leaveBasis}; holidays: ${range.holidayBasis}.`;
     const evidence = document.createElement('a'); evidence.href = range.ptoSource; evidence.textContent = `${range.ptoSourceLabel} ↗`;
     pto.append(document.createTextNode(' '), evidence);
     const hourly = document.createElement('td'); hourly.className = 'hourly-cell'; hourly.textContent = `${usd(range.hourly)}/h`;
     row.append(heading,pay,pto,hourly,context); $('salary-rows').append(row);
   }
   const terms = rates.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} hourly rate"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(range.hourly)}/h</a>`);
-  const leaveBasis = defaults.paidLeaveDaysCount ? `mean evidenced leave (${defaults.paidLeaveDaysCount} company)` : 'fallback leave (no stated counts)';
+  const leaveBasis = defaults.paidLeaveDaysCount ? `mean evidenced leave (${defaults.paidLeaveDaysCount} companies)` : 'fallback leave (no stated counts)';
   const holidayBasis = defaults.paidHolidayDaysCount ? `mean evidenced holidays (${defaults.paidHolidayDaysCount} companies)` : 'fallback holidays (no stated counts)';
-  $('reference-equation').textContent = `⇒ Missing counts: ${defaults.paidLeaveDays} days ${leaveBasis}; ${defaults.paidHolidayDays} days ${holidayBasis}`;
+  $('reference-equation').textContent = `⇒ Missing counts: ${days(defaults.paidLeaveDays)} days ${leaveBasis}; ${days(defaults.paidHolidayDays)} days ${holidayBasis}`;
   $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${rates.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
   $('annual-ask').textContent = `${usd(comparison.annual)} PA`;
   $('headline-annual').textContent = `$${Math.round(comparison.annual / 1000)}k PA`;

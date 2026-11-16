@@ -23,7 +23,7 @@ Open http://127.0.0.1:8765/aave/ask/.
 - Default reference days: Snap 229; Google 228; Reddit, MetaMask and ServiceTitan 228.5. The comparison is about USD 200.67/hour and USD 355,000 annual invoices, using rounded SEK 3,568,000. The raw salary-band mean USD 366,820 is context, not the annual B2B target.
 - Fallbacks remain 20 leave / zero additional holidays, but are inactive while company evidence supplies a mean. They are last-resort assumptions, not employee entitlements.
 - FX is a dated 13 November 2026 snapshot: EUR 1 = USD 1.1052 = SEK 11.1075. SEK agreement and payment are preferred, not required.
-- The contractor day rate stays fixed as contractor leave settings change. Paid time off bills all 261 weekdays. Monthly costs are budget averages, not retainers. Changing comparator assumptions recalculates the proposed rate; changing the custom SEK ask explores a separate fee.
+- The contractor day rate stays fixed as contractor leave settings change. Paid time off bills all 261 weekdays. Monthly costs are budget averages, not retainers. The page now presents the fixed proposal and salary evidence; exploratory calculator controls have been removed.
 
 ## Content sources and verification
 
@@ -42,3 +42,7 @@ Commit and push are authorized. Deployment remains pending explicit approval. Gi
 ## Validation
 
 Fourteen model checks cover company evidence, separate means, per-ad hourly normalization, fractional imputation, fallback precedence, calendar deductions, FX and contractor leave scenarios. Company evidence is labelled separately from estimates and linked in each table row. The sample is sparse: one numeric vacation policy and two holiday counts. It cannot establish typical employee time off at all five companies.
+
+## Simplified presentation
+
+Removed the fallback inputs, Explore the cost calculator, calculation/currency prose and holiday-planning disclosure at the user’s request. The first-section formulas and linked salary table remain driven by the same model. SEK agreement/payment remains a preference, with USD/EUR possible. Prior calculator verification above is historical; it is no longer part of the page.

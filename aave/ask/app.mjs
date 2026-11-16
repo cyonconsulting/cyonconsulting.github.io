@@ -63,6 +63,19 @@ $('ask').value = ASK_SEK;
 const usd = amount => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
 const benchmark = usd(BENCHMARK_USD);
 const hoursPerYear = BASE_DAYS * HOURS_PER_DAY;
+for (const [i, range] of SALARY_RANGES.entries()) {
+  const row = document.createElement('tr'); row.id = `range-${i}`; row.className = `range-${i}`;
+  const heading = document.createElement('th'); heading.scope = 'row';
+  const marker = document.createElement('span'); marker.className = 'range-marker'; marker.textContent = String.fromCharCode(65+i);
+  const role = document.createElement('span'); role.textContent = range.role;
+  heading.append(marker, document.createTextNode(` ${range.label}`), role);
+  const pay = document.createElement('td');
+  pay.textContent = `${usd(Math.round(range.min/1000)*1000)}–${usd(Math.round(range.max/1000)*1000)}`;
+  const context = document.createElement('td');
+  const source = document.createElement('a'); source.href = range.source; source.textContent = `${range.sourceLabel} ↗`;
+  context.append(document.createTextNode(`${range.context} `), source);
+  row.append(heading,pay,context); $('salary-rows').append(row);
+}
 const terms = SALARY_RANGES.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} upper salary band"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(Math.round(range.max / 1000) * 1000)}</a>`);
 $('benchmark-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${SALARY_RANGES.length} ≈ <span class="annual-variable">${benchmark} PA</span>`;
 $('hour-equation').textContent = `⇒ ${benchmark} / ${hoursPerYear.toLocaleString('en-US')} hours ≈ ${usd(BENCHMARK_USD / hoursPerYear)}/hour`;

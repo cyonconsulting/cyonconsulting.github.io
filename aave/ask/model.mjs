@@ -2,11 +2,22 @@
 export const FX = Object.freeze({ date: '2026-11-13', EUR: 1, USD: 1.1052, SEK: 11.1075 });
 export const BASE_DAYS = 221; // 261 weekdays - 5 weekday public holidays - 35 leave days, 2027.
 export const SALARY_RANGES = Object.freeze([
-  { id: 'snap', label: 'Snap', max: 414000 },
-  { id: 'reddit', label: 'Reddit', max: 325500 },
-  { id: 'metamask', label: 'MetaMask', max: 272000 },
-  { id: 'procore', label: 'Procore', max: 272580 },
-  { id: 'toast', label: 'Toast', max: 301000 },
+  { id: 'snap', label: 'Snap', min: 276000, max: 414000,
+    role: 'Principal Software Engineer, iOS',
+    context: '2025 · Zone A: CA, WA, NYC; lower bands in other zones.',
+    source: 'https://www.builtinsf.com/job/principal-software-engineer-ios/4750752', sourceLabel: 'Preserved advert' },
+  { id: 'reddit', label: 'Reddit', min: 232500, max: 325500,
+    role: 'Principal Engineer, iOS Performance', context: '2026 · US remote.',
+    source: 'https://remotestake.com/jobs/principal-engineer-ios-performance-9850301c46', sourceLabel: 'Preserved advert' },
+  { id: 'metamask', label: 'Consensys / MetaMask', min: 227000, max: 272000,
+    role: 'Principal Mobile Engineer, Platform', context: '2026 · US-specific band; React Native and native mobile.',
+    source: 'https://jobs.electriccapital.com/companies/consensys-2-33323f7e-0ce6-439f-89d6-30a145d8d69c/jobs/85611542-principal-mobile-engineer-platform-metamask', sourceLabel: 'Preserved advert' },
+  { id: 'google', label: 'Google', min: 307000, max: 427000,
+    role: 'Principal Engineer, iOS Search App', context: 'June 2026 · CA / NYC. Dated newsletter record; original advert expired.',
+    source: 'https://stanforiosdevelopers.substack.com/p/new-ios-hiring-activity-204', sourceLabel: 'Preserved salary record' },
+  { id: 'servicetitan', label: 'ServiceTitan', min: 263800, max: 395600,
+    role: 'Principal Software Engineer, Mobile', context: '2026 · iOS and Android platform. US Zone 1; Zone 2: $246,500–$369,700.',
+    source: 'https://servicetitan.wd1.myworkdayjobs.com/servicetitan/job/us-remote/principal-software-engineer--mobile_jr115706', sourceLabel: 'Employer advert' },
 ]);
 export const MEAN_UPPER_USD = SALARY_RANGES.reduce((sum, range) => sum + range.max, 0) / SALARY_RANGES.length;
 export const BENCHMARK_USD = Math.round(MEAN_UPPER_USD / 1000) * 1000;

@@ -10,7 +10,7 @@ test('2027 calendar independently gives 261 weekdays and five weekday public hol
  assert.equal(count, 261);
  assert.deepEqual(HOLIDAYS.filter(([date]) => isWeekday(date)).map(([date]) => date), ['2027-01-01','2027-01-06','2027-03-26','2027-03-29','2027-05-06']);
 });
-test('rounded SEK anchor approximates $317k annual invoices after 35 days leave and five holidays', () => {
+test('rounded SEK anchor approximates $367k annual invoices after 35 days leave and five holidays', () => {
  const r = calculate(); assert.equal(r.worked, 221); assert.equal(r.billed, 221);
  assert.ok(Math.abs(convert(r.annual, 'USD') - BENCHMARK_USD) < 50);
  assert.ok(Number.isInteger(ASK_SEK)); close(r.annual, ASK_SEK);
@@ -43,7 +43,17 @@ test('a SEK 1000 ask increment adjusts annual cost by exactly SEK 1000', () => {
 
 test('benchmark is the mean of all five upper salary bands, then rounded', () => {
  assert.equal(SALARY_RANGES.length,5);
- assert.equal(MEAN_UPPER_USD,317016);
- assert.equal(BENCHMARK_USD,317000);
- close(BENCHMARK_USD / (221*8) * 8 * 221,317000);
+ assert.equal(MEAN_UPPER_USD,366820);
+ assert.equal(BENCHMARK_USD,367000);
+ close(BENCHMARK_USD / (221*8) * 8 * 221,367000);
+});
+
+test('salary data has five distinct Principal iOS/mobile roles with explicit sources', () => {
+ assert.equal(new Set(SALARY_RANGES.map(r => r.id)).size,5);
+ assert.deepEqual(SALARY_RANGES.map(r => r.id),['snap','reddit','metamask','google','servicetitan']);
+ for (const range of SALARY_RANGES) {
+  assert.match(range.role,/Principal/); assert.match(range.role,/iOS|Mobile/);
+  assert.ok(range.max >= 270000); assert.ok(range.min < range.max);
+  assert.equal(new URL(range.source).protocol,'https:');
+ }
 });

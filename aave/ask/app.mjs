@@ -101,7 +101,8 @@ function renderComparison() {
   const holidayBasis = defaults.paidHolidayDaysCount ? `mean evidenced holidays (${defaults.paidHolidayDaysCount} companies)` : 'fallback holidays (no stated counts)';
   $('reference-equation').textContent = `⇒ Missing counts: ${defaults.paidLeaveDays} days ${leaveBasis}; ${defaults.paidHolidayDays} days ${holidayBasis}`;
   $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${rates.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
-  $('base-equation').textContent = `⇒ ${usd(comparison.hourly)}/hour * ${HOURS_PER_DAY} * ${BASE_DAYS} ≈ ${usd(comparison.annual)} PA`;
+  $('annual-ask').textContent = `${usd(comparison.annual)} PA`;
+  $('base-equation').textContent = `≈ ${usd(comparison.hourly)}/hour * ${HOURS_PER_DAY} * ${BASE_DAYS} (rounded)`;
   render();
 }
 for (const id of ['fallback-leave','fallback-holidays']) $(id).addEventListener('change', renderComparison);

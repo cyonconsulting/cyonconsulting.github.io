@@ -14,9 +14,9 @@
 <div class="hero-content equation-summary"><h1 class="ask-title">Base compensation target</h1>
 <p class="identity">Alex Cyon | Principal iOS Engineer</p>
 <div class="equations">
+<div class="equation"><code><span class="annual-variable" id="annual-ask">$355,000 PA</span> = <span class="annual-variable">BaseCompPerYear</span><br>= <span class="rate-variable">RatePerHour</span> * 8HoursPerDay * 221DaysWorkedPerYear</code><div class="substitution" id="base-equation"></div></div>
+<div class="equation"><code><span class="rate-variable">RatePerHour</span> = sum(<a class="range-link" href="#salary-ranges">ads</a>.map(HourlyRate)) / ads.count<br>HourlyRate(ad) = ad.max / (8 * (261 − <span class="annual-variable">DaysOff(ad)</span>))</code><div class="substitution" id="hour-equation"></div></div>
 <div class="equation"><code><span class="annual-variable">DaysOff(ad)</span> = ad ?? companyPolicy ?? mean(knownCompanies) ?? fallback</code><div class="substitution" id="reference-equation"></div></div>
-<div class="equation"><code><span class="rate-variable">HourlyRate(ad)</span> = ad.max / (8 * (261 − <span class="annual-variable">DaysOff(ad)</span>))<br>RatePerHour = sum(<a class="range-link" href="#salary-ranges">ads</a>.map(HourlyRate)) / ads.count</code><div class="substitution" id="hour-equation"></div></div>
-<div class="equation"><code><span class="annual-variable">BaseCompPerYear</span> = <span class="rate-variable">RatePerHour</span> * 8HoursPerDay * 221DaysWorkedPerYear</code><div class="substitution" id="base-equation"></div></div>
 </div><p class="equation-note">US company evidence first; unknown counts use the available-company mean (estimated). My 221 days exclude seven weeks’ unpaid leave and Swedish public holidays. SEK preferred.</p>
 </div></section>
 <section id="details" class="details">

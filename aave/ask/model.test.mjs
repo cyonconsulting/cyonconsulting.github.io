@@ -10,7 +10,7 @@ test('2027 calendar independently gives 261 weekdays and five weekday public hol
  assert.equal(count, 261);
  assert.deepEqual(HOLIDAYS.filter(([date]) => isWeekday(date)).map(([date]) => date), ['2027-01-01','2027-01-06','2027-03-26','2027-03-29','2027-05-06']);
 });
-test('rounded SEK anchor approximates $282k annual invoices after 35 days leave and five holidays', () => {
+test('rounded SEK anchor approximates $306k annual invoices after 35 days leave and five holidays', () => {
  const r = calculate(); assert.equal(r.worked, 221); assert.equal(r.billed, 221);
  assert.ok(Math.abs(convert(r.annual, 'USD') - TARGET_USD) < 50);
  assert.ok(Number.isInteger(ASK_SEK)); close(r.annual, ASK_SEK);
@@ -42,14 +42,14 @@ test('a SEK 1000 ask increment adjusts annual cost by exactly SEK 1000', () => {
 });
 
 test('benchmark is the mean of all upper salary bands, then rounded', () => {
- assert.equal(SALARY_RANGES.length,13);
- assert.equal(MEAN_UPPER_USD,291568);
- assert.equal(BENCHMARK_USD,292000);
+ assert.equal(SALARY_RANGES.length,10);
+ assert.equal(MEAN_UPPER_USD,316608.4);
+ assert.equal(BENCHMARK_USD,317000);
 });
 
-test('salary data has thirteen distinct Principal iOS/mobile roles with explicit sources', () => {
- assert.equal(new Set(SALARY_RANGES.map(r => r.id)).size,13);
- assert.deepEqual(SALARY_RANGES.map(r => r.id),['snap','reddit','metamask','google','servicetitan','ion','greendot','slate','minimed','walmart','sharkninja','nbcuniversal','zillow']);
+test('salary data has ten distinct Principal iOS/mobile roles with explicit sources', () => {
+ assert.equal(new Set(SALARY_RANGES.map(r => r.id)).size,10);
+ assert.deepEqual(SALARY_RANGES.map(r => r.id),['snap','reddit','metamask','google','servicetitan','slate','minimed','walmart','nbcuniversal','zillow']);
  for (const range of SALARY_RANGES) {
   assert.match(range.role,/Principal/); assert.match(range.role,/iOS|Mobile/);
   assert.ok(range.max >= 200000); assert.ok(range.min < range.max);
@@ -69,9 +69,9 @@ test('US company evidence supplies separate leave and holiday means', () => {
  assert.equal(rates[0].holidayBasis,'company evidence');
  assert.equal(rates[0].leaveBasis,'sample mean (estimated)');
  assert.equal(rates[3].leaveBasis,'company evidence');
- const expected=(414000/(8*228)+427000/(8*228)+215000/(8*229)+(325500+272000+395600+200000+214300+337684+261000+220000+210000+298300)/(8*(685/3)))/13;
- close(HOURLY_USD,expected); assert.equal(TARGET_USD,282000);
- assert.equal(ASK_SEK,2834000); assert.equal(REFERENCE_WEEKDAYS,261);
+ const expected=(414000/(8*228)+427000/(8*228)+215000/(8*229)+(325500+272000+395600+337684+261000+220000+298300)/(8*(685/3)))/10;
+ close(HOURLY_USD,expected); assert.equal(TARGET_USD,306000);
+ assert.equal(ASK_SEK,3075000); assert.equal(REFERENCE_WEEKDAYS,261);
  for (const range of SALARY_RANGES) assert.equal(new URL(range.ptoSource).protocol,'https:');
 });
 test('last-resort assumptions do not override available company evidence', () => {
@@ -111,7 +111,12 @@ test('imputation uses only reported counts, including zero, never other imputati
 test('broader sample respects the requested salary floor and lower-band cap', () => {
  assert.equal(new Set(SALARY_RANGES.map(r=>r.label)).size,SALARY_RANGES.length);
  assert.ok(SALARY_RANGES.every(r=>r.max>=200000));
- assert.equal(SALARY_RANGES.filter(r=>r.max<220000).length,4);
+ assert.equal(SALARY_RANGES.filter(r=>r.max<220000).length,1);
  assert.ok(SALARY_RANGES.filter(r=>r.max<220000).length<=5);
  assert.equal(SALARY_RANGES.find(r=>r.id==='walmart').max,220000);
+});
+
+test('the three lowest advertised upper bands are excluded from the selected sample', () => {
+ for (const id of ['ion','sharkninja','greendot']) assert.ok(!SALARY_RANGES.some(r=>r.id===id));
+ assert.equal(Math.min(...SALARY_RANGES.map(r=>r.max)),215000);
 });

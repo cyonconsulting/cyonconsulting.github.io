@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { SALARY_RANGES, MEAN_UPPER_USD, BENCHMARK_USD, ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
+import { SALARY_RANGES, MEAN_UPPER_USD, BENCHMARK_USD, TARGET_USD, HOURLY_USD, REFERENCE_WEEKDAYS, comparisonTarget, referenceDays, normalizedHourlyRate, ASK_SEK, HOURS_PER_DAY, HOLIDAYS, isWeekday, calculate, convert } from './model.mjs';
 const close = (a, b) => assert.ok(Math.abs(a - b) < 1e-7, `${a} != ${b}`);
 test('2027 calendar independently gives 261 weekdays and five weekday public holidays', () => {
  let count = 0;
@@ -10,9 +10,9 @@ test('2027 calendar independently gives 261 weekdays and five weekday public hol
  assert.equal(count, 261);
  assert.deepEqual(HOLIDAYS.filter(([date]) => isWeekday(date)).map(([date]) => date), ['2027-01-01','2027-01-06','2027-03-26','2027-03-29','2027-05-06']);
 });
-test('rounded SEK anchor approximates $367k annual invoices after 35 days leave and five holidays', () => {
+test('rounded SEK anchor approximates $336k annual invoices after 35 days leave and five holidays', () => {
  const r = calculate(); assert.equal(r.worked, 221); assert.equal(r.billed, 221);
- assert.ok(Math.abs(convert(r.annual, 'USD') - BENCHMARK_USD) < 50);
+ assert.ok(Math.abs(convert(r.annual, 'USD') - TARGET_USD) < 50);
  assert.ok(Number.isInteger(ASK_SEK)); close(r.annual, ASK_SEK);
  close(r.noAbsence - r.annual, 40 * r.daily);
 });
@@ -32,7 +32,7 @@ test('holiday eves deduct exactly three additional weekdays once', () => {
 });
 test('FX conversions preserve the whole-SEK anchor and hourly rate uses eight hours', () => {
  close(convert(ASK_SEK,'SEK'),ASK_SEK);
- assert.ok(Math.abs(convert(ASK_SEK,'EUR')*1.1052 - BENCHMARK_USD) < 50);
+ assert.ok(Math.abs(convert(ASK_SEK,'EUR')*1.1052 - TARGET_USD) < 50);
  assert.equal(HOURS_PER_DAY,8);
  const r = calculate(); close(r.hourly*8,r.daily);
 });
@@ -45,7 +45,6 @@ test('benchmark is the mean of all five upper salary bands, then rounded', () =>
  assert.equal(SALARY_RANGES.length,5);
  assert.equal(MEAN_UPPER_USD,366820);
  assert.equal(BENCHMARK_USD,367000);
- close(BENCHMARK_USD / (221*8) * 8 * 221,367000);
 });
 
 test('salary data has five distinct Principal iOS/mobile roles with explicit sources', () => {
@@ -56,4 +55,32 @@ test('salary data has five distinct Principal iOS/mobile roles with explicit sou
   assert.ok(range.max >= 270000); assert.ok(range.min < range.max);
   assert.equal(new URL(range.source).protocol,'https:');
  }
+});
+
+test('default unknown PTO assumes 20 paid leave days, giving 241 reference days', () => {
+ for (const range of SALARY_RANGES) {
+  assert.equal(range.paidLeaveDays,null); assert.equal(range.paidHolidayDays,null);
+  assert.equal(referenceDays(range),241);
+ }
+ assert.equal(REFERENCE_WEEKDAYS,261);
+ close(HOURLY_USD,366820/(8*241));
+ close(HOURLY_USD*8*221,366820*221/241);
+ assert.equal(TARGET_USD,336000); assert.ok(TARGET_USD < BENCHMARK_USD);
+});
+test('different known PTO counts are normalized per advert before the mean', () => {
+ const refs=[{max:240000,paidLeaveDays:20,paidHolidayDays:10}, {max:300000,paidLeaveDays:null,paidHolidayDays:null}];
+ assert.equal(referenceDays(refs[0]),231); assert.equal(referenceDays(refs[1]),241);
+ close(normalizedHourlyRate(refs),(240000/(8*231)+300000/(8*241))/2);
+ assert.notEqual(normalizedHourlyRate(refs),270000/(8*236));
+});
+test('stated counts override fallbacks; unknown counts remain adjustable', () => {
+ assert.equal(referenceDays({paidLeaveDays:25,paidHolidayDays:10},{paidLeaveDays:20,paidHolidayDays:0}),226);
+ assert.equal(referenceDays({paidLeaveDays:25,paidHolidayDays:null},{paidLeaveDays:20,paidHolidayDays:10}),226);
+ assert.equal(referenceDays({paidLeaveDays:0,paidHolidayDays:0}),261);
+ assert.equal(referenceDays({paidLeaveDays:null,paidHolidayDays:null},{paidLeaveDays:0,paidHolidayDays:0}),261);
+ assert.equal(comparisonTarget({paidLeaveDays:20,paidHolidayDays:10}).annual,351000);
+ assert.equal(comparisonTarget({paidLeaveDays:0,paidHolidayDays:0}).annual,311000);
+ assert.throws(()=>referenceDays({paidLeaveDays:262,paidHolidayDays:0}),RangeError);
+ assert.throws(()=>referenceDays({paidLeaveDays:-1,paidHolidayDays:null}),RangeError);
+ assert.throws(()=>normalizedHourlyRate([]),RangeError);
 });

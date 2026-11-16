@@ -1,6 +1,7 @@
-import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, BENCHMARK_USD, ASK_SEK, calculate, convert } from './model.mjs';
+import { HOURS_PER_DAY, BASE_DAYS, SALARY_RANGES, REFERENCE_WEEKDAYS, DEFAULT_PAID_LEAVE, DEFAULT_PAID_HOLIDAYS, comparisonTarget, referenceDays, ASK_SEK, calculate, convert } from './model.mjs';
 const $ = id => document.getElementById(id);
 const selected = name => document.querySelector(`input[name="${name}"]:checked`).value;
+let activeAskSek = ASK_SEK;
 function money(sek, currency) {
   const amount = convert(sek, currency);
   const increment = Math.abs(amount) >= 10000 ? 1000 : 1;
@@ -19,7 +20,7 @@ function render() {
   const weeks = Number(selected('weeks'));
   const hours = HOURS_PER_DAY;
   const r = calculate({ ask, weeks, mode, eves: $('eves').checked });
-  const proposal = mode === 'unpaid' && weeks === 7 && !$('eves').checked && Math.abs(ask - ASK_SEK) < 0.01;
+  const proposal = mode === 'unpaid' && weeks === 7 && !$('eves').checked && Math.abs(ask - activeAskSek) < 0.01;
   $('scenario').textContent = proposal ? 'THE PROPOSED ARRANGEMENT' : 'EXPLORATORY COMPARISON · TOP SUMMARY REMAINS THE ASK';
   const rateView = period === 'day' || period === 'hour';
   const value = { year: r.annual, month: r.annual / 12, day: r.daily, hour: r.hourly }[period];
@@ -55,31 +56,47 @@ $('reset').addEventListener('click', () => {
   for (const [name, value] of Object.entries({ currency: 'USD', period: 'year', mode: 'unpaid', weeks: '7' })) {
     document.querySelector(`input[name="${name}"][value="${value}"]`).checked = true;
   }
-  $('ask').value = ASK_SEK;
+  $('fallback-leave').value = DEFAULT_PAID_LEAVE;
+  $('fallback-holidays').value = DEFAULT_PAID_HOLIDAYS;
   $('eves').checked = false;
-  render();
+  renderComparison();
 });
-$('ask').value = ASK_SEK;
 const usd = amount => new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD', maximumFractionDigits: 0 }).format(amount);
-const benchmark = usd(BENCHMARK_USD);
-const hoursPerYear = BASE_DAYS * HOURS_PER_DAY;
-for (const [i, range] of SALARY_RANGES.entries()) {
-  const row = document.createElement('tr'); row.id = `range-${i}`; row.className = `range-${i}`;
-  const heading = document.createElement('th'); heading.scope = 'row';
-  const marker = document.createElement('span'); marker.className = 'range-marker'; marker.textContent = String.fromCharCode(65+i);
-  const role = document.createElement('span'); role.textContent = range.role;
-  heading.append(marker, document.createTextNode(` ${range.label}`), role);
-  const pay = document.createElement('td');
-  pay.textContent = `${usd(Math.round(range.min/1000)*1000)}–${usd(Math.round(range.max/1000)*1000)}`;
-  const context = document.createElement('td');
-  const source = document.createElement('a'); source.href = range.source; source.textContent = `${range.sourceLabel} ↗`;
-  context.append(document.createTextNode(`${range.context} `), source);
-  row.append(heading,pay,context); $('salary-rows').append(row);
+function renderComparison() {
+  for (const id of ['fallback-leave','fallback-holidays']) {
+    const input = $(id);
+    input.setCustomValidity('');
+    if (!input.value || !Number.isInteger(Number(input.value)) || !input.checkValidity()) {
+      input.setCustomValidity('Enter a whole number within the displayed range.'); input.reportValidity(); return;
+    }
+  }
+  const fallback = { paidLeaveDays: Number($('fallback-leave').value), paidHolidayDays: Number($('fallback-holidays').value) };
+  const comparison = comparisonTarget(fallback);
+  activeAskSek = comparison.askSek; $('ask').value = activeAskSek;
+  $('salary-rows').replaceChildren();
+  for (const [i, range] of SALARY_RANGES.entries()) {
+    const row = document.createElement('tr'); row.id = `range-${i}`; row.className = `range-${i}`;
+    const heading = document.createElement('th'); heading.scope = 'row';
+    const marker = document.createElement('span'); marker.className = 'range-marker'; marker.textContent = String.fromCharCode(65+i);
+    const role = document.createElement('span'); role.textContent = range.role;
+    heading.append(marker, document.createTextNode(` ${range.label}`), role);
+    const pay = document.createElement('td');
+    pay.textContent = `${usd(Math.round(range.min/1000)*1000)}–${usd(Math.round(range.max/1000)*1000)}`;
+    const context = document.createElement('td');
+    const source = document.createElement('a'); source.href = range.source; source.textContent = `${range.sourceLabel} ↗`;
+    context.append(document.createTextNode(`${range.context} `), source);
+    const pto = document.createElement('td'); pto.className = 'pto-cell';
+    const assumed = range.paidLeaveDays == null || range.paidHolidayDays == null;
+    pto.textContent = `${range.ptoNote} ${referenceDays(range, fallback)} reference days${assumed ? ' (uses assumptions)' : ''}.`;
+    row.append(heading,pay,pto,context); $('salary-rows').append(row);
+  }
+  const terms = SALARY_RANGES.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} hourly comparison"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(Math.round(range.max / 1000) * 1000)} / (8 * ${referenceDays(range, fallback)})</a>`);
+  $('reference-equation').textContent = `⇒ Unstated counts: ${REFERENCE_WEEKDAYS} − ${fallback.paidLeaveDays} assumed leave − ${fallback.paidHolidayDays} assumed holidays = ${REFERENCE_WEEKDAYS-fallback.paidLeaveDays-fallback.paidHolidayDays} days`;
+  $('hour-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${SALARY_RANGES.length} ≈ <span class="rate-variable">${usd(comparison.hourly)}/hour</span>`;
+  $('base-equation').textContent = `⇒ ${usd(comparison.hourly)}/hour * ${HOURS_PER_DAY} * ${BASE_DAYS} ≈ ${usd(comparison.annual)} PA`;
+  render();
 }
-const terms = SALARY_RANGES.map((range, i) => `<a class="range-term range-${i}" href="#range-${i}" aria-label="${range.label} upper salary band"><span class="range-marker">${String.fromCharCode(65+i)}</span> ${usd(Math.round(range.max / 1000) * 1000)}</a>`);
-$('benchmark-equation').innerHTML = `⇒ (${terms.join(' + ')}) / ${SALARY_RANGES.length} ≈ <span class="annual-variable">${benchmark} PA</span>`;
-$('hour-equation').textContent = `⇒ ${benchmark} / ${hoursPerYear.toLocaleString('en-US')} hours ≈ ${usd(BENCHMARK_USD / hoursPerYear)}/hour`;
-$('base-equation').textContent = `⇒ (${benchmark} / ${hoursPerYear.toLocaleString('en-US')}) * ${HOURS_PER_DAY} * ${BASE_DAYS} = ${benchmark} PA`;
+for (const id of ['fallback-leave','fallback-holidays']) $(id).addEventListener('change', renderComparison);
 const groups = [
   ['Wallets & shared infrastructure', [
     ['radixdlt/sargon', 'Sargon · production Rust SDK'], ['radixdlt/babylon-wallet-ios', 'Radix Wallet · iOS'],
@@ -118,4 +135,4 @@ for (const [title, repos] of groups) {
   for (const [path, title] of repos) { const link = document.createElement('a'); link.href = `https://github.com/${path}`; link.textContent = `${title} ↗`; links.append(link); }
   section.append(links); $('repo-groups').append(section);
 }
-render();
+renderComparison();

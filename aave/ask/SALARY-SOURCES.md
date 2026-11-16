@@ -1,6 +1,6 @@
 # Salary-source audit — 16 November 2026
 
-10 distinct Principal iOS/Mobile roles, one per employer. Exact annual USD employee base bands are stored in the model; display rounds to the nearest USD 1,000. Every upper bound is at least USD 200,000; one is strictly below USD 220,000, within the requested cap of five. Bonus and equity are excluded. Employer-hosted and preserved adverts are labelled separately. A successful HTTP response alone is not proof of retained job text.
+9 distinct Principal iOS/Mobile roles, one per employer. Exact annual USD employee base bands are stored in the model; display rounds to the nearest USD 1,000. Every upper bound is at least USD 200,000; none are strictly below USD 220,000, within the requested cap of five. Bonus and equity are excluded. Employer-hosted and preserved adverts are labelled separately. A successful HTTP response alone is not proof of retained job text.
 
 ## Salary evidence
 
@@ -14,7 +14,6 @@
 | Slate Auto — Principal Engineer, Mobile | 202,610–337,684 | [Employer advert](https://recar.wd108.myworkdayjobs.com/en-US/SLATEcareers/job/Remote-WA/Principal-Engineer--Mobile_JR101381-1) | September 2026 · Remote WA. React Native/C++, vehicle communications and mobile security. |
 | MiniMed — Principal Mobile Engineer | 153,000–261,000 | [Employer advert](https://mdtkangaroo.wd108.myworkdayjobs.com/en-US/MiniMedCareers/job/Principal-Mobile-Engineer_R-801938-1) | November 2026 · Northridge, CA band. iOS/Android medical devices; other US band $138,000–$234,000. |
 | Walmart — Principal Software Engineer, Frontend (Mobile) | 110,000–220,000 | [Employer advert](https://careers.walmart.com/us/en/jobs/R-2492379) | 2026 · Bentonville, AR. React Native/Expo, iOS/Android architecture. R-2492379. |
-| NBCUniversal — Principal Software Engineer, iOS | 185,000–215,000 | [Preserved employer advert](https://www.wayup.com/i-j-Principal-Software-Engineer-iOS-NBCUniversal-396997114170400/) | 2026 · NYC, hybrid. NBC News Digital, native iOS. Closed advert preserved. |
 | Zillow — Principal Software Development Engineer, iOS Mobile | 186,700–298,300 | [Preserved investor-hosted advert](https://portfoliojobs.tcv.com/companies/zillow/jobs/43993671-principal-software-development-engineer-ios-mobile) | December 2024–January 2025 · Closed US-remote advert; listed states including CA/NY/WA. Native Swift/Objective-C. |
 
 Original five retained from the previous audit: Snap full preserved ad; Reddit Remotestake mirror replacing a rate-limited Employbl link; MetaMask closed employer text on investor board; Google dated newsletter salary record (weaker than a surviving advert); ServiceTitan employer Workday JobPosting schema. Google's original Principal advert is expired; do not combine its preserved USD 427,000 maximum with differing cached values.
@@ -35,35 +34,33 @@ Vacation and freely usable personal days are combined in `paidLeaveDays`; compan
 | Slate Auto | Vacation offered; annual counts not stated. Numeric leave: unknown; holidays: unknown. | [Advert benefits](https://recar.wd108.myworkdayjobs.com/en-US/SLATEcareers/job/Remote-WA/Principal-Engineer--Mobile_JR101381-1) |
 | MiniMed | PTO and holidays offered; annual counts not stated. Numeric leave: unknown; holidays: unknown. | [Advert benefits](https://mdtkangaroo.wd108.myworkdayjobs.com/en-US/MiniMedCareers/job/Principal-Mobile-Engineer_R-801938-1) |
 | Walmart | Global Tech FlexTO has no fixed annual allowance; facility-staff accrual tables excluded. Numeric leave: unknown; holidays: unknown. | [Employer salaried PTO policy](https://one.walmart.com/content/dam/themepage/pdfs/PTO-Accrual-Chart-Above-Facility-Level-Salary.pdf) |
-| NBCUniversal | US benefits: 15 vacation + 7 personal days, plus 10 company holidays. Sick/caregiving excluded. Numeric leave: 22; holidays: 10. | [Employer US benefits](https://www.nbcunicareers.com/benefits) |
 | Zillow | US benefits do not quantify annual counts. Six-year sabbatical and India allowances excluded. Numeric leave: unknown; holidays: unknown. | [Employer benefits](https://www.zillow.com/careers/benefits/) |
 
-Google's other US engineering ad explicitly makes its benefits disclosure for eligible US employees: 20 vacation days during the first five years and 13 paid holidays. This is a current company-policy proxy for the historical Principal ad. Snap's company benefits profile on Built In supplies 12 paid holidays; its up-to-three-week non-exempt vacation bank does not apply to the exempt engineering comparison. NBCUniversal's employer benefits page supplies 15 vacation days, seven personal myDays and ten company holidays for US full-time staff: leave input 22, holiday input 10. Its five caregiving days and sick leave are excluded.
+Google's other US engineering ad explicitly makes its benefits disclosure for eligible US employees: 20 vacation days during the first five years and 13 paid holidays. This is a current company-policy proxy for the historical Principal ad. Snap's company benefits profile on Built In supplies 12 paid holidays; its up-to-three-week non-exempt vacation bank does not apply to the exempt engineering comparison. NBCUniversal’s formerly used policy is excluded together with its salary advert.
 
 Walmart's official salaried policy identifies Global Tech FlexTO without a set annual bank, covering vacation/personal/holidays: do not import the facility-employee accrual table. MiniMed's ad does not quantify annual allowances; do not automatically borrow former Medtronic policies. SharkNinja's ESG report mentions two floating days, one tied to volunteering, but does not establish the complete US holiday/vacation total; no partial total substituted. Zillow's six-week R&R after six years is not recurring annual leave; India-specific allowances are excluded. Reddit Ireland's historical 25 days are excluded from this US comparison. Consensys quarterly recharge wording does not establish annual days or non-overlap.
 
 ## Hourly-first calculation
 
-Resolve each allowance from the salary ad, then applicable US company evidence, then the mean of known company counts; a last-resort fallback applies only if no count is known. Imputed values never contribute to the means. Current means: (20 + 22) / 2 = 21 leave days; (12 + 13 + 10) / 3 = 11.6666667 holidays. This sparse imputation does not establish actual time off taken at flexible-PTO employers.
+Resolve each allowance from the salary ad, then applicable US company evidence, then the mean of known company counts; a last-resort fallback applies only if no count is known. Imputed values never contribute to the means. Current means: Google alone supplies 20 leave days; (12 + 13) / 2 = 12.5 holidays from Snap and Google. This sparse imputation does not establish actual time off taken at flexible-PTO employers.
 
-Each hourly rate = upper annual base / (8 × (261 − resolved leave − resolved holidays)). Mean those 10 hourly rates equally. Apply the resulting rate to Alex's 221 eight-hour billed days.
+Each hourly rate = upper annual base / (8 × (261 − resolved leave − resolved holidays)). Mean those 9 hourly rates equally. Apply the resulting rate to Alex's 221 eight-hour billed days.
 
 | Company | Reference days | Upper-band hourly USD |
 | --- | --- | --- |
-| Snap | 228.00 | 226.97 |
-| Reddit | 228.33 | 178.19 |
-| Consensys / MetaMask | 228.33 | 148.91 |
+| Snap | 229.00 | 225.98 |
+| Reddit | 228.50 | 178.06 |
+| Consensys / MetaMask | 228.50 | 148.80 |
 | Google | 228.00 | 234.10 |
-| ServiceTitan | 228.33 | 216.57 |
-| Slate Auto | 228.33 | 184.86 |
-| MiniMed | 228.33 | 142.88 |
-| Walmart | 228.33 | 120.44 |
-| NBCUniversal | 229.00 | 117.36 |
-| Zillow | 228.33 | 163.30 |
+| ServiceTitan | 228.50 | 216.41 |
+| Slate Auto | 228.50 | 184.73 |
+| MiniMed | 228.50 | 142.78 |
+| Walmart | 228.50 | 120.35 |
+| Zillow | 228.50 | 163.18 |
 
-Exact mean upper annual band: USD 316,608.40. Mean hourly: USD 173.35881145. At 221 × 8 hours: USD 306,498.38, rounded to USD 306,000 PA. Preferred SEK anchor 3,075,000, using the dated 13 November 2026 FX snapshot. This supersedes the 13-ad USD 282,000 result. Rounding the SEK anchor produces a small conversion difference.
+Exact mean upper annual band: USD 327,898.22. Mean hourly: USD 179.37736891. At 221 × 8 hours: USD 317,139.19, rounded to USD 317,000 PA. Preferred SEK anchor 3,186,000, using the dated 13 November 2026 FX snapshot. This supersedes the ten-ad USD 306,000 result.
 
-At the user’s request, removed the three lowest advertised upper bands: ION/Lab49 USD 200,000, SharkNinja USD 210,000 and Green Dot USD 214,300. Their adverts were verified in the earlier audit, but they no longer contribute to the table, means or target. Exclusion deliberately selects a higher-paying sample.
+At the user’s request, removed ION/Lab49 (upper USD 200,000), SharkNinja (USD 210,000), Green Dot (USD 214,300), then NBCUniversal (USD 215,000). Their adverts no longer contribute to the table, means or target; NBCUniversal’s numeric PTO evidence is also excluded from the imputation means. These exclusions deliberately select a higher-paying sample.
 
 ## Limits and exclusions
 

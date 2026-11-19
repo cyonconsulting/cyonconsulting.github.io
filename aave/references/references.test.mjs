@@ -3,13 +3,16 @@ import assert from 'node:assert/strict';
 import {readFile,readdir} from 'node:fs/promises';
 import {deriveKey,encode,decryptContacts} from './crypto.mjs';
 const refs=JSON.parse(await readFile(new URL('./references.json',import.meta.url)));
-test('all five supplied references have exact excerpts and honest attribution',()=>{
- assert.deepEqual(refs.map(r=>r.id),['matias','alex','michael','omar','viktor']);
- assert.deepEqual(refs.map(r=>r.excerpts.length),[3,2,2,2,2]);
+test('all six supplied references have exact excerpts and honest attribution',()=>{
+ assert.deepEqual(refs.map(r=>r.id),['matias','alex','michael','omar','vanja','viktor']);
+ assert.deepEqual(refs.map(r=>r.excerpts.length),[3,2,2,2,2,2]);
  for(const ref of refs)for(const excerpt of ref.excerpts){assert.ok(ref.full.some(p=>p.includes(excerpt.text)),`${ref.id} excerpt must match its source`);assert.ok(excerpt.text.includes(excerpt.highlight));}
  assert.equal(refs.find(r=>r.id==='alex').name,'Alexander Stelea');
  assert.equal(refs.find(r=>r.id==='omar').source,'Privately supplied recommendation');
  assert.equal(refs.find(r=>r.id==='omar').linkedin,'');
+ assert.equal(refs.find(r=>r.id==='vanja').source,'Privately supplied recommendation');
+ assert.equal(refs.find(r=>r.id==='vanja').linkedin,'');
+ assert.equal(refs.find(r=>r.id==='vanja').relationship,'We worked together at Spotify.');
  assert.match(refs.find(r=>r.id==='viktor').relationship,/not been professional colleagues/);
 });
 test('published bundle contains no plaintext contact addresses, phone numbers or screenshots',async()=>{

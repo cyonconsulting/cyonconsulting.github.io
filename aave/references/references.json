@@ -120,6 +120,33 @@
     ]
   },
   {
+    "id": "vanja",
+    "name": "Vanja Vidmark",
+    "initials": "VV",
+    "role": "iOS engineer",
+    "type": "Work reference",
+    "relationship": "We worked together at Spotify.",
+    "location": "",
+    "languages": "",
+    "linkedin": "",
+    "github": "",
+    "date": "",
+    "source": "Privately supplied recommendation",
+    "excerpts": [
+      {
+        "text": "He has an impressive depth of knowledge in iOS development and is a sharp problem-solver.",
+        "highlight": "impressive depth of knowledge in iOS development"
+      },
+      {
+        "text": "He's also an excellent communicator who is always happy to share his knowledge and help others. On a personal level, Alex is collaborative, friendly and a fantastic person to have on any team.",
+        "highlight": "collaborative, friendly and a fantastic person to have on any team"
+      }
+    ],
+    "full": [
+      "I had the pleasure of working with Alex at Spotify. He has an impressive depth of knowledge in iOS development and is a sharp problem-solver. I learned so much from Alex during our time working together. His enthusiasm for programming and passion for writing clear and elegant code is inspiring. He's also an excellent communicator who is always happy to share his knowledge and help others. On a personal level, Alex is collaborative, friendly and a fantastic person to have on any team."
+    ]
+  },
+  {
     "id": "viktor",
     "name": "Viktor Jansson",
     "initials": "VJ",

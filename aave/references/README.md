@@ -2,7 +2,7 @@
 
 Static references page for https://cyonconsulting.com/aave/references/.
 
-Five recommendations transcribed from screenshots supplied by Alex on 19 November 2026. Four are LinkedIn recommendations dated 18/19 March 2025. Omar's recommendation was privately supplied; no date or LinkedIn source is invented. Multiple short quotations highlight technical expertise, collaboration and mentorship. Each quotation is an exact contiguous excerpt of the full text; highlighted words do not alter the quotation. Source spelling/grammar is retained, including Omar's. Roles and relationship descriptions come from the supplied contact sheets, not a fresh employer verification. Viktor is explicitly a personal reference/mentee, not a former professional colleague.
+Six recommendations supplied by Alex: five from screenshots on 19 November 2026, and Vanja’s from the user’s follow-up. Four are LinkedIn recommendations dated 18/19 March 2025. Omar’s and Vanja’s recommendations were privately supplied; no date or LinkedIn source is invented. Multiple short quotations highlight technical expertise, collaboration and mentorship. Each quotation is an exact contiguous excerpt of the full text; highlighted words do not alter the quotation. Source spelling/grammar is retained, including Omar's. Roles and relationship descriptions come from the supplied contact sheets, not a fresh employer verification. Viktor is explicitly a personal reference/mentee, not a former professional colleague.
 
 ## Contact privacy
 

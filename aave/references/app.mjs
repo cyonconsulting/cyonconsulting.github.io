@@ -17,9 +17,11 @@ function buildReference(ref) {
   const top=el('div','person-top'), name=el('div');
   name.append(el('p','reference-type',ref.type),el('h2','',ref.name));
   const initials=el('span','monogram',ref.initials); initials.setAttribute('aria-hidden','true'); top.append(initials,name);
-  person.append(top,el('p','role',ref.role),el('p','relationship',ref.relationship),el('p','person-meta',[ref.location,ref.languages].filter(Boolean).join(' · ')));
+  person.append(top,el('p','role',ref.role),el('p','relationship',ref.relationship));
+  const meta=[ref.location,ref.languages].filter(Boolean).join(' · ');
+  if(meta)person.append(el('p','person-meta',meta));
   const links=el('div','person-links');
-  if(ref.linkedin)links.append(link('LinkedIn ↗',ref.linkedin)); if(ref.github)links.append(link('GitHub ↗',ref.github)); person.append(links);
+  if(ref.linkedin)links.append(link('LinkedIn ↗',ref.linkedin)); if(ref.github)links.append(link('GitHub ↗',ref.github)); if(links.childElementCount)person.append(links);
   const contacts=el('div','contacts'); contacts.id=`contacts-${ref.id}`; contacts.setAttribute('aria-label',`${ref.name} contact details`); lockedContact(contacts); person.append(contacts);
   const words=el('div','words'), figure=el('figure');
   for (const excerpt of ref.excerpts) {
@@ -59,7 +61,7 @@ $('unlock-form').addEventListener('submit',async event=>{
       phone.append(el('span','','Phone'),link(contact.phone,`tel:${contact.phone}`)); container.append(email,phone);
     }
     contacts=null; unlocked=true; $('unlock-form').reset(); $('unlock-form').hidden=true; $('unlocked-controls').hidden=false;
-    $('unlock-status').textContent='Email and phone details are now visible on all five references.';
+    $('unlock-status').textContent=`Email and phone details are now visible on all ${references.length} references.`;
   }catch(error){
     if(error.message==='load')$('unlock-status').textContent='Could not load contact details. Please try again.';
     else $('unlock-status').textContent='Could not unlock contacts. Check the password and try again.';

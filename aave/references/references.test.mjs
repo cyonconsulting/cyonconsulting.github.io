@@ -7,7 +7,7 @@ test('all seven supplied references have exact excerpts and honest attribution',
  assert.deepEqual(refs.map(r=>r.id),['matias','alex','michael','omar','sergiu','vanja','viktor']);
  assert.deepEqual(refs.map(r=>r.excerpts.length),[3,2,2,2,3,2,2]);
  for(const ref of refs)for(const excerpt of ref.excerpts){assert.ok(ref.full.some(p=>p.includes(excerpt.text)),`${ref.id} excerpt must match its source`);assert.ok(excerpt.text.includes(excerpt.highlight));}
- assert.equal(refs.find(r=>r.id==='alex').name,'Alexander Stelea');
+ assert.equal(refs.find(r=>r.id==='alex').name,'Alex Stelea');
  assert.equal(refs.find(r=>r.id==='omar').source,'Privately supplied recommendation');
  assert.equal(refs.find(r=>r.id==='omar').linkedin,'');
  assert.equal(refs.find(r=>r.id==='vanja').source,'LinkedIn recommendation');

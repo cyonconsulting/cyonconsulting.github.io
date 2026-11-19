@@ -120,6 +120,37 @@
     ]
   },
   {
+    "id": "sergiu",
+    "name": "Sergiu Puhalschi",
+    "initials": "SP",
+    "role": "Senior Mobile Engineer · SagaCity",
+    "type": "Work reference",
+    "relationship": "We worked together at RDX Works on the wallet apps and shared Rust library.",
+    "location": "",
+    "languages": "",
+    "linkedin": "",
+    "github": "",
+    "date": "18 March 2025",
+    "source": "LinkedIn recommendation",
+    "full": [
+      "I’ve worked with Alex at RDX Works and he is one of the most exceptional colleagues I’ve had. He established the foundation of a Rust library for the Android and iOS wallet apps, and he guided every team member through the onboarding process, helping us learn Rust from scratch. He dedicated a lot of time to giving thorough code reviews, answering questions, and helping the team whenever needed. He has an impressive ability to design complex solutions and architectures, and he was our go-to person for anything related to cryptography. On top of that, he’s friendly, approachable, and a fantastic team player. I’ve learned so much from working with him, and any team would be lucky to have him!"
+    ],
+    "excerpts": [
+      {
+        "text": "I’ve worked with Alex at RDX Works and he is one of the most exceptional colleagues I’ve had.",
+        "highlight": "one of the most exceptional colleagues I’ve had"
+      },
+      {
+        "text": "He has an impressive ability to design complex solutions and architectures, and he was our go-to person for anything related to cryptography.",
+        "highlight": "our go-to person for anything related to cryptography"
+      },
+      {
+        "text": "On top of that, he’s friendly, approachable, and a fantastic team player. I’ve learned so much from working with him, and any team would be lucky to have him!",
+        "highlight": "friendly, approachable, and a fantastic team player"
+      }
+    ]
+  },
+  {
     "id": "vanja",
     "name": "Vanja Vidmark",
     "initials": "VV",

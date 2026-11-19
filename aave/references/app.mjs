@@ -21,11 +21,15 @@ function buildReference(ref) {
   const links=el('div','person-links');
   if(ref.linkedin)links.append(link('LinkedIn ↗',ref.linkedin)); if(ref.github)links.append(link('GitHub ↗',ref.github)); person.append(links);
   const contacts=el('div','contacts'); contacts.id=`contacts-${ref.id}`; contacts.setAttribute('aria-label',`${ref.name} contact details`); lockedContact(contacts); person.append(contacts);
-  const words=el('div','words'), figure=el('figure'), quote=el('blockquote','excerpt');
-  const index=ref.excerpt.indexOf(ref.highlight);
-  if(index<0)quote.textContent=ref.excerpt;
-  else quote.append(document.createTextNode(ref.excerpt.slice(0,index)),el('mark','',ref.highlight),document.createTextNode(ref.excerpt.slice(index+ref.highlight.length)));
-  figure.append(quote,el('figcaption','',`Excerpt · ${ref.source}${ref.date?' · '+ref.date:''}`));
+  const words=el('div','words'), figure=el('figure');
+  for (const excerpt of ref.excerpts) {
+    const quote=el('blockquote','excerpt');
+    const index=excerpt.text.indexOf(excerpt.highlight);
+    if(index<0)quote.textContent=excerpt.text;
+    else quote.append(document.createTextNode(excerpt.text.slice(0,index)),el('mark','',excerpt.highlight),document.createTextNode(excerpt.text.slice(index+excerpt.highlight.length)));
+    figure.append(quote);
+  }
+  figure.append(el('figcaption','',`${ref.excerpts.length>1?'Excerpts':'Excerpt'} · ${ref.source}${ref.date?' · '+ref.date:''}`));
   const details=el('details','full-recommendation'); details.append(el('summary','','Read full recommendation'));
   const full=el('blockquote','full-text'); for(const paragraph of ref.full)full.append(el('p','',paragraph)); details.append(full); words.append(figure,details);
   if(ref.source==='LinkedIn recommendation')words.append(link('View recommendations on LinkedIn ↗','https://www.linkedin.com/in/alexcyon/details/recommendations/','source-link'));

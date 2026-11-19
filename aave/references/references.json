@@ -1,5 +1,36 @@
 [
   {
+    "id": "omar",
+    "name": "Omar Abdulla",
+    "initials": "OA",
+    "role": "Senior Rust developer · Parity Technologies",
+    "type": "Work reference",
+    "relationship": "We worked together at Radix / RDX Works for many years on shared SDKs and cross-platform mobile functionality.",
+    "location": "Qatar · UTC+3",
+    "languages": "English, Arabic",
+    "linkedin": "",
+    "github": "https://github.com/0xOmarA",
+    "date": "",
+    "source": "Privately supplied recommendation",
+    "full": [
+      "I’ve been working with Alexander Cyon for over 3 years now where he was a veteran at RDX Works having joined the company 3 years before I did. To put it simply, Cyon is a fantastic person to work with on all fronts imaginable: technical abilities, love for exploration, and being a genuinely awesome human being.",
+      "Cyon has been an integral part of the development of the Radix wallet on both iOS and Android despite iOS being his primary wheelhouse. Many parts of the Radix wallet architecture were designed and architected by Cyon and then given to the respective teams to implement. The big bulk of the cryptography primitives and design that were needed for the Radix wallet were done by him and they’re in used in the wallet today. Additionally, Sargon, the primary backend that powers 90% of the wallet functionality is the fruit of Cyon’s exploration of Rust, binding generation, and how to use it to solve the code duplication problem where most of the logic was duplicated between Swift and Kotlin. Cyon worked on Sargon during his own free time, got it to a point where it was useful enough to the wallet team, and then lead the integration of Sargon into both the iOS and Kotlin wallets. I can personally attest that Sargon vastly improved the wallet development and user experience and ensured that a significant amount of code was unified in a single place. He then lead the onboarding of more devs to contribute to Sargon and helped introduce and mentor a lot of his team to Rust, Uniffi, and to Sargon.",
+      "He is one of the few people that I’ve met in the industry that I can truly call a polyglot programmer. Cyon is able to pick up on languages and concepts extremely quickly having become an expert in Rust in about a year. I’ve personally reviewed Cyon’s Rust code and can attest that his code, work, architecture, design, documentation, and testing are top notch. In addition to that, Cyon has spent a majority of his time at RDX Works writing Swift for the iOS wallet and also authored the old Olympia wallet in JavaScript.",
+      "Additionally, I very much admire Cyon’s love for exploration and learning. Sargon was pretty much the fruit of Cyon’s exploration into Rust and into writing a library once that can be used on any platform. I recall Cyon sending me the Swift Macros proposal mere minutes after it was published and recall how excited he was over them. This is a re-occurring theme that highlights him wanting to grow and improve.",
+      "Finally, Cyon is truly an amazing human to work with. He’s a very approachable person, easy to ask questions to, and I’ve seen him mentor his team mates on more then a single occasion. Cyon has been an absolute pleasure to work with!"
+    ],
+    "excerpts": [
+      {
+        "text": "I’ve personally reviewed Cyon’s Rust code and can attest that his code, work, architecture, design, documentation, and testing are top notch.",
+        "highlight": "architecture, design, documentation, and testing are top notch"
+      },
+      {
+        "text": "He’s a very approachable person, easy to ask questions to, and I’ve seen him mentor his team mates on more then a single occasion. Cyon has been an absolute pleasure to work with!",
+        "highlight": "an absolute pleasure to work with"
+      }
+    ]
+  },
+  {
     "id": "matias",
     "name": "Matias Bzurovski",
     "initials": "MB",
@@ -62,64 +93,6 @@
     ]
   },
   {
-    "id": "michael",
-    "name": "Michael Bakogiannis",
-    "initials": "MB",
-    "role": "Senior mobile developer · StarkWare",
-    "type": "Work reference",
-    "relationship": "We worked closely at Radix for many years, including the Radix Wallet and Sargon SDK.",
-    "location": "Greece · EET / EEST",
-    "languages": "",
-    "linkedin": "https://www.linkedin.com/in/micbakos/",
-    "github": "https://github.com/micbakos",
-    "date": "18 March 2025",
-    "source": "LinkedIn recommendation",
-    "full": [
-      "I’ve had the pleasure of working with Alex, and I can confidently say he is an exceptional professional. His expertise in cryptography, software design, and problem-solving is truly impressive. Beyond his technical skills, Alex is a natural mentor, always willing to guide and support others. His ability to communicate complex ideas with clarity makes him a standout collaborator. Any team would be lucky to have him!"
-    ],
-    "excerpts": [
-      {
-        "text": "I’ve had the pleasure of working with Alex, and I can confidently say he is an exceptional professional. His expertise in cryptography, software design, and problem-solving is truly impressive.",
-        "highlight": "expertise in cryptography, software design, and problem-solving"
-      },
-      {
-        "text": "Beyond his technical skills, Alex is a natural mentor, always willing to guide and support others. His ability to communicate complex ideas with clarity makes him a standout collaborator.",
-        "highlight": "communicate complex ideas with clarity"
-      }
-    ]
-  },
-  {
-    "id": "omar",
-    "name": "Omar Abdulla",
-    "initials": "OA",
-    "role": "Senior Rust developer · Parity Technologies",
-    "type": "Work reference",
-    "relationship": "We worked together at Radix / RDX Works for many years on shared SDKs and cross-platform mobile functionality.",
-    "location": "Qatar · UTC+3",
-    "languages": "English, Arabic",
-    "linkedin": "",
-    "github": "https://github.com/0xOmarA",
-    "date": "",
-    "source": "Privately supplied recommendation",
-    "full": [
-      "I’ve been working with Alexander Cyon for over 3 years now where he was a veteran at RDX Works having joined the company 3 years before I did. To put it simply, Cyon is a fantastic person to work with on all fronts imaginable: technical abilities, love for exploration, and being a genuinely awesome human being.",
-      "Cyon has been an integral part of the development of the Radix wallet on both iOS and Android despite iOS being his primary wheelhouse. Many parts of the Radix wallet architecture were designed and architected by Cyon and then given to the respective teams to implement. The big bulk of the cryptography primitives and design that were needed for the Radix wallet were done by him and they’re in used in the wallet today. Additionally, Sargon, the primary backend that powers 90% of the wallet functionality is the fruit of Cyon’s exploration of Rust, binding generation, and how to use it to solve the code duplication problem where most of the logic was duplicated between Swift and Kotlin. Cyon worked on Sargon during his own free time, got it to a point where it was useful enough to the wallet team, and then lead the integration of Sargon into both the iOS and Kotlin wallets. I can personally attest that Sargon vastly improved the wallet development and user experience and ensured that a significant amount of code was unified in a single place. He then lead the onboarding of more devs to contribute to Sargon and helped introduce and mentor a lot of his team to Rust, Uniffi, and to Sargon.",
-      "He is one of the few people that I’ve met in the industry that I can truly call a polyglot programmer. Cyon is able to pick up on languages and concepts extremely quickly having become an expert in Rust in about a year. I’ve personally reviewed Cyon’s Rust code and can attest that his code, work, architecture, design, documentation, and testing are top notch. In addition to that, Cyon has spent a majority of his time at RDX Works writing Swift for the iOS wallet and also authored the old Olympia wallet in JavaScript.",
-      "Additionally, I very much admire Cyon’s love for exploration and learning. Sargon was pretty much the fruit of Cyon’s exploration into Rust and into writing a library once that can be used on any platform. I recall Cyon sending me the Swift Macros proposal mere minutes after it was published and recall how excited he was over them. This is a re-occurring theme that highlights him wanting to grow and improve.",
-      "Finally, Cyon is truly an amazing human to work with. He’s a very approachable person, easy to ask questions to, and I’ve seen him mentor his team mates on more then a single occasion. Cyon has been an absolute pleasure to work with!"
-    ],
-    "excerpts": [
-      {
-        "text": "I’ve personally reviewed Cyon’s Rust code and can attest that his code, work, architecture, design, documentation, and testing are top notch.",
-        "highlight": "architecture, design, documentation, and testing are top notch"
-      },
-      {
-        "text": "He’s a very approachable person, easy to ask questions to, and I’ve seen him mentor his team mates on more then a single occasion. Cyon has been an absolute pleasure to work with!",
-        "highlight": "an absolute pleasure to work with"
-      }
-    ]
-  },
-  {
     "id": "sergiu",
     "name": "Sergiu Puhalschi",
     "initials": "SP",
@@ -175,6 +148,33 @@
     ],
     "full": [
       "I had the pleasure of working with Alex at Spotify. He has an impressive depth of knowledge in iOS development and is a sharp problem-solver. I learned so much from Alex during our time working together. His enthusiasm for programming and passion for writing clear and elegant code is inspiring. He's also an excellent communicator who is always happy to share his knowledge and help others. On a personal level, Alex is collaborative, friendly and a fantastic person to have on any team."
+    ]
+  },
+  {
+    "id": "michael",
+    "name": "Michael Bakogiannis",
+    "initials": "MB",
+    "role": "Senior mobile developer · StarkWare",
+    "type": "Work reference",
+    "relationship": "We worked closely at Radix for many years, including the Radix Wallet and Sargon SDK.",
+    "location": "Greece · EET / EEST",
+    "languages": "",
+    "linkedin": "https://www.linkedin.com/in/micbakos/",
+    "github": "https://github.com/micbakos",
+    "date": "18 March 2025",
+    "source": "LinkedIn recommendation",
+    "full": [
+      "I’ve had the pleasure of working with Alex, and I can confidently say he is an exceptional professional. His expertise in cryptography, software design, and problem-solving is truly impressive. Beyond his technical skills, Alex is a natural mentor, always willing to guide and support others. His ability to communicate complex ideas with clarity makes him a standout collaborator. Any team would be lucky to have him!"
+    ],
+    "excerpts": [
+      {
+        "text": "I’ve had the pleasure of working with Alex, and I can confidently say he is an exceptional professional. His expertise in cryptography, software design, and problem-solving is truly impressive.",
+        "highlight": "expertise in cryptography, software design, and problem-solving"
+      },
+      {
+        "text": "Beyond his technical skills, Alex is a natural mentor, always willing to guide and support others. His ability to communicate complex ideas with clarity makes him a standout collaborator.",
+        "highlight": "communicate complex ideas with clarity"
+      }
     ]
   },
   {

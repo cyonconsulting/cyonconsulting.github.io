@@ -16,7 +16,9 @@ test('all seven supplied references have exact excerpts and honest attribution',
  assert.match(refs.find(r=>r.id==='viktor').relationship,/not been professional colleagues/);
 });
 test('published bundle contains no plaintext contact addresses, phone numbers or screenshots',async()=>{
- for(const name of await readdir(new URL('.',import.meta.url))){
+ for(const entry of await readdir(new URL('.',import.meta.url),{withFileTypes:true})){
+  const name=entry.name;
+  if(entry.isDirectory()){assert.equal(name,'photos');continue;}
   assert.ok(!/\.(png|jpe?g)$/i.test(name));
   const text=await readFile(new URL(name,import.meta.url),'utf8');
   assert.ok(!/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}/i.test(text),`${name} contains an email address`);

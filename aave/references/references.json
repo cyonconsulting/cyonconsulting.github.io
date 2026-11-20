@@ -32,7 +32,8 @@
         "text": "Alex genuinely cares about his colleagues, always checking in on others and celebrating their successes. His positivity and encouragement create an environment where people feel valued and motivated.",
         "highlight": "people feel valued and motivated"
       }
-    ]
+    ],
+    "photo": "photos/matias.jpeg"
   },
   {
     "id": "alex",
@@ -59,7 +60,8 @@
         "text": "his technical proficiency is truly top-tier. I deeply respect and admire his work ethic",
         "highlight": "truly top-tier"
       }
-    ]
+    ],
+    "photo": "photos/alex.png"
   },
   {
     "id": "sergiu",
@@ -90,7 +92,8 @@
         "text": "On top of that, he’s friendly, approachable, and a fantastic team player. I’ve learned so much from working with him, and any team would be lucky to have him!",
         "highlight": "friendly, approachable, and a fantastic team player"
       }
-    ]
+    ],
+    "photo": "photos/sergiu.jpeg"
   },
   {
     "id": "vanja",
@@ -117,7 +120,8 @@
     ],
     "full": [
       "I had the pleasure of working with Alex at Spotify. He has an impressive depth of knowledge in iOS development and is a sharp problem-solver. I learned so much from Alex during our time working together. His enthusiasm for programming and passion for writing clear and elegant code is inspiring. He's also an excellent communicator who is always happy to share his knowledge and help others. On a personal level, Alex is collaborative, friendly and a fantastic person to have on any team."
-    ]
+    ],
+    "photo": "photos/vanja.jpeg"
   },
   {
     "id": "michael",
@@ -144,7 +148,8 @@
         "text": "Beyond his technical skills, Alex is a natural mentor, always willing to guide and support others. His ability to communicate complex ideas with clarity makes him a standout collaborator.",
         "highlight": "communicate complex ideas with clarity"
       }
-    ]
+    ],
+    "photo": "photos/michael.jpeg"
   },
   {
     "id": "viktor",
@@ -171,7 +176,8 @@
         "text": "There is no one more knowledgeable, dedicated, or thorough, and he would be a tremendous asset to any team.",
         "highlight": "knowledgeable, dedicated, or thorough"
       }
-    ]
+    ],
+    "photo": "photos/viktor.jpeg"
   },
   {
     "id": "omar",
@@ -202,6 +208,7 @@
         "text": "He’s a very approachable person, easy to ask questions to, and I’ve seen him mentor his team mates on more then a single occasion. Cyon has been an absolute pleasure to work with!",
         "highlight": "an absolute pleasure to work with"
       }
-    ]
+    ],
+    "photo": "photos/omar.png"
   }
 ]

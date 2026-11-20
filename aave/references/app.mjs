@@ -16,7 +16,8 @@ function buildReference(ref) {
   const person=el('div','person');
   const top=el('div','person-top'), name=el('div');
   name.append(el('p','reference-type',ref.type),el('h2','',ref.name));
-  const initials=el('span','monogram',ref.initials); initials.setAttribute('aria-hidden','true'); top.append(initials,name);
+  const portrait=el('span',`portrait${ref.id==='omar'?' portrait-omar':''}`), photo=el('img');
+  photo.src=ref.photo; photo.alt=''; photo.width=160; photo.height=160; photo.loading='lazy'; photo.decoding='async'; portrait.append(photo); top.append(portrait,name);
   person.append(top,el('p','role',ref.role),el('p','relationship',ref.relationship));
   const meta=[ref.location,ref.languages].filter(Boolean).join(' · ');
   if(meta)person.append(el('p','person-meta',meta));

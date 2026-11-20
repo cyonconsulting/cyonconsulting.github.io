@@ -11,7 +11,7 @@ test('all seven supplied references have exact excerpts and honest attribution',
  assert.equal(refs.find(r=>r.id==='omar').source,'Privately supplied recommendation');
  assert.equal(refs.find(r=>r.id==='omar').linkedin,'');
  assert.equal(refs.find(r=>r.id==='vanja').source,'LinkedIn recommendation');
- assert.equal(refs.find(r=>r.id==='vanja').linkedin,'');
+ assert.equal(refs.find(r=>r.id==='vanja').linkedin,'https://www.linkedin.com/in/vanja-vidmark-858110235/');
  assert.equal(refs.find(r=>r.id==='vanja').relationship,'We worked together at Spotify.');
  assert.match(refs.find(r=>r.id==='viktor').relationship,/not been professional colleagues/);
 });

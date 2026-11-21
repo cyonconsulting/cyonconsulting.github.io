@@ -18,3 +18,7 @@ The form decrypts locally and clears the password field. It does not send the pa
 - Before publication, scan the entire directory for plaintext email addresses, phone numbers and the actual shared password.
 
 To update contacts, encrypt a complete new record with a new random salt and IV, using the same envelope format and context. Use a private/offline input mechanism, not plaintext tracked files. There is deliberately no password reset endpoint.
+
+## Direct links
+
+Cards are rendered from JSON. Initial fragment navigation waits until the cards and fonts exist, then scrolls to the requested ID. This fixes external links such as `/aave/references/#vanja` and `#omar`, which previously tried to resolve before their targets existed. The compact compensation rows link directly to the same IDs. Regression checks are in `../ask/navigation.test.mjs`.

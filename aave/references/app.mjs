@@ -72,4 +72,10 @@ window.addEventListener('pagehide',()=>{if(unlocked)lockContacts(false);});
 try {
   const response=await fetch('./references.json'); if(!response.ok)throw new Error(); references=await response.json();
   $('references').replaceChildren(...references.map(buildReference)); $('unlock-button').disabled=false;
+  // Fragment targets are created asynchronously: align after cards and fonts exist.
+  if(window.location.hash){
+    await document.fonts.ready;
+    let id; try{id=decodeURIComponent(window.location.hash.slice(1));}catch{id='';}
+    document.getElementById(id)?.scrollIntoView({behavior:'instant',block:'start'});
+  }
 }catch{ $('loading').textContent='Recommendations could not load. Please refresh the page.'; $('unlock-button').disabled=true; }

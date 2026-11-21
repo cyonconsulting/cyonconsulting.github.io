@@ -11,7 +11,9 @@ test('compact rows preserve order, original quotes, short length, portraits and 
  for(const [,id,content] of rows){
   const ref=refs.find(r=>r.id===id),quote=decode(content.match(/<q>(.*?)<\/q>/s)[1]);
   assert.ok(quote.length<=200);
-  for(const fragment of quote.replace(/^\.\.\./,'').split(' … '))assert.ok(ref.full.some(p=>p.includes(fragment)),id);
+  const original=ref.full.join('\n');
+  const positions=quote.replace(/^\.\.\./,'').split(' … ').map(fragment=>{const position=original.indexOf(fragment);assert.ok(position>=0,id);return position;});
+  assert.deepEqual(positions,[...positions].sort((a,b)=>a-b),`${id} excerpts must follow original order`);
   assert.ok(content.includes(`/aave/references/${ref.photo}`));
   assert.ok(content.includes(ref.name)); assert.ok(content.includes(decode(ref.role)));
  }
